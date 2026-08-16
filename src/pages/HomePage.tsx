@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 
 import ctaStudentImg from '../assets/images/cta_student_books_1786912237396.jpg';
-import heroStudentImg from '../assets/images/hero_student_classroom_1786912397937.jpg';
+import heroStudentImg from '../assets/images/hero_student_study_group_1786913429143.jpg';
 
 // Authentic Student Hero & CTA Imagery
 const HERO_STUDENT_IMG = heroStudentImg;
@@ -123,46 +123,46 @@ export const HomePage: React.FC<HomePageProps> = ({
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
-        className="relative pt-6 sm:pt-10 pb-4 max-w-7xl mx-auto px-4 sm:px-6"
+        className="relative pt-4 sm:pt-8 md:pt-10 pb-4 max-w-7xl mx-auto px-3.5 sm:px-6"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Heading, Subtitle & Search Console */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-7 space-y-6"
+            className="lg:col-span-7 space-y-4 sm:space-y-6"
           >
             {/* Trust badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50/90 backdrop-blur-sm border border-amber-200/80 text-amber-900 text-xs font-bold shadow-2xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-amber-50/90 backdrop-blur-sm border border-amber-200/80 text-amber-900 text-[11px] sm:text-xs font-bold shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" />
               <span>{t('hero_badge')}</span>
             </div>
 
             {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#0B132B] tracking-tight leading-[1.1]">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#0B132B] tracking-tight leading-[1.15] sm:leading-[1.1]">
               {t('hero_title_1')}{' '}
-              <span className="text-[#F59E0B] underline decoration-[#F59E0B]/30 underline-offset-8">
+              <span className="text-[#F59E0B] underline decoration-[#F59E0B]/30 underline-offset-4 sm:underline-offset-8">
                 {t('hero_title_2')}
               </span>{' '}
               {t('hero_title_3')}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed max-w-xl">
               {t('hero_subtitle')}
             </p>
 
             {/* Compact Search Console */}
             <form
               onSubmit={handleSearchSubmit}
-              className="bg-white p-3.5 sm:p-4 rounded-3xl border border-stone-200/90 shadow-xl shadow-stone-200/50 space-y-3 backdrop-blur-md"
+              className="bg-white p-3 sm:p-4 rounded-2xl sm:rounded-3xl border border-stone-200/90 shadow-xl shadow-stone-200/50 space-y-3 backdrop-blur-md"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
                 
                 {/* Neighborhood Input */}
-                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-xl sm:rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
                   <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block flex items-center gap-1">
                     <MapPin className="w-3 h-3 text-[#F59E0B]" />
                     {t('hero_field_neighborhood')}
@@ -177,7 +177,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
 
                 {/* Housing Type Select */}
-                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-xl sm:rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
                   <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block flex items-center gap-1">
                     <Home className="w-3 h-3 text-blue-500" />
                     {t('hero_field_type')}
@@ -196,7 +196,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
 
                 {/* Max Budget Input */}
-                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-xl sm:rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
                   <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block flex items-center gap-1">
                     <Coins className="w-3 h-3 text-emerald-500" />
                     {t('hero_field_max_budget')}
@@ -215,7 +215,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               {/* Submit CTA */}
               <button
                 type="submit"
-                className="w-full py-3.5 bg-[#0B132B] hover:bg-[#1E293B] text-white font-bold text-sm rounded-2xl shadow-lg shadow-slate-900/20 transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3 sm:py-3.5 bg-[#0B132B] hover:bg-[#1E293B] text-white font-bold text-xs sm:text-sm rounded-xl sm:rounded-2xl shadow-lg shadow-slate-900/20 transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2"
               >
                 <Search className="w-4 h-4 text-[#F59E0B]" />
                 <span>{t('hero_search_cta')}</span>
@@ -224,27 +224,27 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             {/* Social Proof */}
             <div className="flex items-center gap-3 pt-1">
-              <div className="flex -space-x-2 overflow-hidden">
+              <div className="flex -space-x-2 overflow-hidden shrink-0">
                 <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
+                  className="inline-block h-7 w-7 sm:h-8 sm:w-8 rounded-full ring-2 ring-white object-cover"
                   src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=120&q=80"
                   alt="Student 1"
                   referrerPolicy="no-referrer"
                 />
                 <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
+                  className="inline-block h-7 w-7 sm:h-8 sm:w-8 rounded-full ring-2 ring-white object-cover"
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
                   alt="Student 2"
                   referrerPolicy="no-referrer"
                 />
                 <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
+                  className="inline-block h-7 w-7 sm:h-8 sm:w-8 rounded-full ring-2 ring-white object-cover"
                   src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=120&q=80"
                   alt="Student 3"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <p className="text-xs text-slate-600 font-medium">
+              <p className="text-[11px] sm:text-xs text-slate-600 font-medium">
                 {t('hero_social_proof')}
               </p>
             </div>
@@ -255,9 +255,86 @@ export const HomePage: React.FC<HomePageProps> = ({
             initial={{ opacity: 0, scale: 0.94, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-5 relative"
+            className="lg:col-span-5 relative mt-4 lg:mt-0"
           >
             <div className="relative mx-auto max-w-md lg:max-w-none">
+              
+              {/* Animated pulsating gradient glow */}
+              <motion.div 
+                animate={{ 
+                  scale: [1, 1.06, 1],
+                  opacity: [0.35, 0.6, 0.35]
+                }}
+                transition={{ 
+                  duration: 5, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="absolute -inset-4 bg-gradient-to-tr from-[#F59E0B]/30 via-amber-300/20 to-blue-600/20 rounded-3xl blur-2xl -z-10" 
+              />
+
+              {/* Floating Top-Right Mini Badge */}
+              <motion.div
+                initial={{ opacity: 0, x: 20, y: -10 }}
+                animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
+                transition={{
+                  opacity: { delay: 0.4, duration: 0.5 },
+                  x: { delay: 0.4, duration: 0.5 },
+                  y: { repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0.5 }
+                }}
+                className="absolute -top-2.5 -right-1.5 sm:-top-3 sm:-right-2 z-20 bg-white/95 backdrop-blur-md px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full border border-amber-200/80 shadow-lg flex items-center gap-1.5 text-[11px] sm:text-xs font-black text-[#0B132B]"
+              >
+                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F59E0B]" />
+                <span>Étudiants 2026</span>
+              </motion.div>
+
+              {/* Main Image Frame with Gentle Floating Motion */}
+              <motion.div 
+                animate={{ y: [0, -6, 0] }}
+                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                className="relative aspect-[16/11] sm:aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white bg-slate-900 group"
+              >
+                <img
+                  src={HERO_STUDENT_IMG}
+                  alt="Étudiants Waaloge"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-103"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/85 via-black/15 to-transparent" />
+
+                {/* Floating Bottom Card */}
+                <motion.div 
+                  initial={{ y: 25, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.45, duration: 0.55, ease: [0.22, 1, 0.36, 1] as const }}
+                  className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 bg-white/95 backdrop-blur-md p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-white/50 shadow-xl flex items-center justify-between gap-2"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-amber-100 flex items-center justify-center text-[#D97706] shadow-xs shrink-0">
+                      <CalendarCheck2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase tracking-wider block truncate">
+                        {t('hero_badge_stat_title')}
+                      </span>
+                      <span className="text-xs sm:text-base font-black text-slate-900 block truncate">
+                        {t('hero_badge_stat_val')}
+                      </span>
+                    </div>
+                  </div>
+
+                  <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-emerald-50 text-emerald-700 text-[10px] sm:text-xs font-bold border border-emerald-200 shadow-2xs flex items-center gap-1 shrink-0">
+                    <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600" />
+                    <span>100% Gratuit</span>
+                  </span>
+                </motion.div>
+              </motion.div>
+
+            </div>
+          </motion.div>
+
+        </div>
+      </motion.section>
               
               {/* Animated pulsating gradient glow */}
               <motion.div 
@@ -285,22 +362,22 @@ export const HomePage: React.FC<HomePageProps> = ({
                 className="absolute -top-3 -right-2 z-20 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-amber-200/80 shadow-lg flex items-center gap-1.5 text-xs font-black text-[#0B132B]"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
-                <span>Étudiante 2026</span>
+                <span>Étudiants 2026</span>
               </motion.div>
 
               {/* Main Image Frame with Gentle Floating Motion */}
               <motion.div 
                 animate={{ y: [0, -6, 0] }}
                 transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 group"
+                className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 group"
               >
                 <img
                   src={HERO_STUDENT_IMG}
-                  alt="Étudiante Waaloge"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  alt="Étudiants Waaloge"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-103"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/85 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/85 via-black/15 to-transparent" />
 
                 {/* Floating Bottom Card */}
                 <motion.div 

@@ -1,0 +1,6 @@
+{
+  "name": "Waaloge",
+  "description": "Plateforme de logement étudiant pour chercher, découvrir, comparer et réserver des visites de logements en toute confiance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

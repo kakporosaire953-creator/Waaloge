@@ -18,10 +18,10 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   onClick
 }) => {
   const sizeClasses = {
-    sm: 'h-[60px] max-w-[260px]',
-    md: 'h-[100px] max-w-[380px]',
-    lg: 'h-[120px] max-w-[460px]',
-    xl: 'h-[150px] max-w-[550px]'
+    sm: 'h-[40px] sm:h-[48px] md:h-[56px] max-w-[180px] sm:max-w-[220px]',
+    md: 'h-[50px] sm:h-[70px] md:h-[86px] lg:h-[100px] max-w-[185px] sm:max-w-[270px] md:max-w-[340px] lg:max-w-[380px]',
+    lg: 'h-[60px] sm:h-[80px] md:h-[100px] lg:h-[120px] max-w-[220px] sm:max-w-[320px] md:max-w-[420px]',
+    xl: 'h-[80px] sm:h-[105px] md:h-[130px] lg:h-[150px] max-w-[300px] sm:max-w-[420px] md:max-w-[550px]'
   };
 
   const isDark = theme === 'dark';
