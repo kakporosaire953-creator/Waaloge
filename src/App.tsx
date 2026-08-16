@@ -210,6 +210,7 @@ const MainApp: React.FC = () => {
             selectedCity={selectedCity}
             onSelectProperty={handleSelectProperty}
             onNavigate={handleNavigate}
+            onOpenBooking={(property) => setBookingProperty(property)}
             onSearch={(params) => {
               handleFilterChange(params);
             }}

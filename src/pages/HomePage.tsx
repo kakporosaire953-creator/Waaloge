@@ -1,791 +1,804 @@
 import React, { useState } from 'react';
-import { Property, CityId, PropertyType } from '../types';
+import { motion } from 'motion/react';
+import { Property, SearchFilters, CityId } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useAuth } from '../contexts/AuthContext';
-import { useBookings } from '../contexts/BookingsContext';
+import { PropertyCarousel } from '../components/common/PropertyCarousel';
+import { BudgetSimulator } from '../components/common/BudgetSimulator';
+import { NeighborhoodExplorer } from '../components/common/NeighborhoodExplorer';
+import { FaqAccordion } from '../components/common/FaqAccordion';
 import { 
   Search, 
   MapPin, 
+  Coins, 
+  Home, 
+  Sparkles, 
+  CheckCircle2, 
+  ArrowRight, 
   ShieldCheck, 
-  CalendarCheck, 
-  MessageSquareHeart, 
-  Lock, 
-  Heart, 
-  ArrowRight,
-  TrendingUp,
-  Wifi,
-  ShowerHead,
-  BedDouble,
+  CalendarCheck2, 
+  Users, 
+  Zap,
   Droplets,
-  DoorOpen,
-  UtensilsCrossed,
-  Layers,
-  Sparkles
+  BookOpen,
+  Clock,
+  ChevronRight
 } from 'lucide-react';
 
-// Hero & CTA student portrait image paths
-const HERO_STUDENT_IMG = 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1000&q=85';
-const CTA_STUDENT_IMG = 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=85';
+import ctaStudentImg from '../assets/images/cta_student_books_1786912237396.jpg';
+import heroStudentImg from '../assets/images/hero_student_classroom_1786912397937.jpg';
+
+// Authentic Student Hero & CTA Imagery
+const HERO_STUDENT_IMG = heroStudentImg;
+const CTA_STUDENT_IMG = ctaStudentImg;
+
+// Harmonious Section Animation Variants
+const sectionVariants = {
+  hidden: { opacity: 0, y: 35 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.65, 
+      ease: [0.22, 1, 0.36, 1] as const,
+      staggerChildren: 0.1
+    } 
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.5, 
+      ease: [0.22, 1, 0.36, 1] as const 
+    } 
+  }
+};
 
 interface HomePageProps {
   properties: Property[];
-  selectedCity: CityId;
+  onSearch: (filters: Partial<SearchFilters>) => void;
   onSelectProperty: (id: string) => void;
-  onNavigate: (tab: string, propertyId?: string) => void;
-  onSearch: (params: { query?: string; neighborhood?: string; type?: PropertyType | 'all'; minPrice?: number; maxPrice?: number }) => void;
+  onNavigate: (tab: string) => void;
+  onOpenBooking: (property: Property) => void;
+  selectedCity: CityId;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
   properties,
-  selectedCity,
+  onSearch,
   onSelectProperty,
   onNavigate,
-  onSearch
+  onOpenBooking,
+  selectedCity
 }) => {
-  const { t } = useLanguage();
-  const { isAuthenticated } = useAuth();
-  const { isFavorite, toggleFavorite } = useBookings();
+  const { t, language } = useLanguage();
 
-  // Search Bar Form State
-  const [searchLocation, setSearchLocation] = useState('');
-  const [searchMinBudget, setSearchMinBudget] = useState('50000');
-  const [searchMaxBudget, setSearchMaxBudget] = useState('150000');
-  const [searchType, setSearchType] = useState<PropertyType | 'all'>('all');
+  // Search Bar Local States
+  const [neighborhood, setNeighborhood] = useState('');
+  const [minPrice, setMinPrice] = useState<string>('');
+  const [maxPrice, setMaxPrice] = useState<string>('');
+  const [propertyType, setPropertyType] = useState<string>('all');
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch({
-      query: searchLocation || undefined,
-      type: searchType,
-      minPrice: searchMinBudget ? parseInt(searchMinBudget) : undefined,
-      maxPrice: searchMaxBudget ? parseInt(searchMaxBudget) : undefined
+      neighborhood: neighborhood.trim() || undefined,
+      minPrice: minPrice ? Number(minPrice) : undefined,
+      maxPrice: maxPrice ? Number(maxPrice) : undefined,
+      type: propertyType !== 'all' ? (propertyType as any) : undefined,
     });
     onNavigate('explore');
   };
 
-  const handlePropertyClick = (id: string) => {
-    if (!isAuthenticated) {
-      onNavigate('auth', id);
-    } else {
-      onSelectProperty(id);
-    }
+  const handleQuickBudgetSearch = (maxBudgetVal: number) => {
+    onSearch({
+      maxPrice: maxBudgetVal,
+    });
+    onNavigate('explore');
   };
 
-  // 4 popular properties (matches the image)
-  const popularProperties = properties.slice(0, 4);
+  const handleQuickNeighborhoodSearch = (neighborhoodName: string) => {
+    onSearch({
+      neighborhood: neighborhoodName,
+    });
+    onNavigate('explore');
+  };
 
   return (
-    <div className="bg-[#FAF9F6] text-slate-900 overflow-x-hidden font-sans">
+    <div className="relative space-y-20 sm:space-y-28 pb-24 overflow-x-hidden">
       
+      {/* Ambient background glow accents for page-wide visual harmony */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] pointer-events-none -z-10 overflow-hidden">
+        <div className="absolute -top-32 -left-20 w-[500px] h-[500px] bg-amber-200/25 rounded-full blur-3xl" />
+        <div className="absolute top-40 -right-20 w-[450px] h-[450px] bg-blue-200/20 rounded-full blur-3xl" />
+      </div>
+
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION (EXACT MATCH WITH DESIGN) */}
+      {/* 1. HERO SECTION */}
       {/* ========================================================================= */}
-      <section className="relative pt-8 sm:pt-14 pb-16 sm:pb-24 max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <motion.section 
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
+        className="relative pt-6 sm:pt-10 pb-4 max-w-7xl mx-auto px-4 sm:px-6"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
-          {/* Left Column: Headline, Pill, Subtitle & Search Console */}
-          <div className="lg:col-span-7 space-y-6">
-            
-            {/* Top Pill Tag */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs sm:text-sm font-semibold tracking-tight border border-blue-100">
-              <span>Logement étudiant en toute confiance</span>
+          {/* Left Column: Heading, Subtitle & Search Console */}
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
+            className="lg:col-span-7 space-y-6"
+          >
+            {/* Trust badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50/90 backdrop-blur-sm border border-amber-200/80 text-amber-900 text-xs font-bold shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" />
+              <span>{t('hero_badge')}</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-black text-[#0B132B] tracking-tight leading-[1.12]">
-              Ton prochain<br />
-              chez-toi<br />
-              <span className="text-[#F59E0B]">commence ici.</span>
+            {/* Main Title */}
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#0B132B] tracking-tight leading-[1.1]">
+              {t('hero_title_1')}{' '}
+              <span className="text-[#F59E0B] underline decoration-[#F59E0B]/30 underline-offset-8">
+                {t('hero_title_2')}
+              </span>{' '}
+              {t('hero_title_3')}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed">
-              Trouve un <strong className="font-semibold text-slate-900">logement</strong> adapté à ta vie étudiante, découvre ton futur quartier et réserve ta visite avant même d'arriver.
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
+              {t('hero_subtitle')}
             </p>
 
-            {/* FLOATING SEARCH BAR CARD (EXACT 4 FIELDS + BUTTON) */}
-            <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border border-slate-100 mt-6">
-              <form onSubmit={handleSearchSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                  
-                  {/* Field 1: Quartier */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-900 block">
-                      Quartier
-                    </label>
-                    <input
-                      type="text"
-                      value={searchLocation}
-                      onChange={(e) => setSearchLocation(e.target.value)}
-                      placeholder="Ex: Zogona, Ouaga 2000"
-                      className="w-full text-xs sm:text-sm text-slate-800 placeholder-slate-400 bg-transparent border-0 p-0 focus:ring-0 focus:outline-none"
-                    />
-                  </div>
-
-                  {/* Field 2: Budget min. */}
-                  <div className="space-y-1 sm:border-l sm:border-slate-100 sm:pl-3">
-                    <label className="text-xs font-bold text-slate-900 block">
-                      Budget min.
-                    </label>
-                    <select
-                      value={searchMinBudget}
-                      onChange={(e) => setSearchMinBudget(e.target.value)}
-                      className="w-full text-xs sm:text-sm text-slate-700 bg-transparent border-0 p-0 focus:ring-0 focus:outline-none cursor-pointer"
-                    >
-                      <option value="0">0 FCFA</option>
-                      <option value="30000">30 000 FCFA</option>
-                      <option value="50000">50 000 FCFA</option>
-                      <option value="75000">75 000 FCFA</option>
-                    </select>
-                  </div>
-
-                  {/* Field 3: Budget max. */}
-                  <div className="space-y-1 sm:border-l sm:border-slate-100 sm:pl-3">
-                    <label className="text-xs font-bold text-slate-900 block">
-                      Budget max.
-                    </label>
-                    <select
-                      value={searchMaxBudget}
-                      onChange={(e) => setSearchMaxBudget(e.target.value)}
-                      className="w-full text-xs sm:text-sm text-slate-700 bg-transparent border-0 p-0 focus:ring-0 focus:outline-none cursor-pointer"
-                    >
-                      <option value="100000">100 000 FCFA</option>
-                      <option value="150000">150 000 FCFA</option>
-                      <option value="200000">200 000 FCFA</option>
-                      <option value="300000">300 000 FCFA</option>
-                    </select>
-                  </div>
-
-                  {/* Field 4: Type de logement */}
-                  <div className="space-y-1 sm:border-l sm:border-slate-100 sm:pl-3">
-                    <label className="text-xs font-bold text-slate-900 block">
-                      Type de logement
-                    </label>
-                    <select
-                      value={searchType}
-                      onChange={(e) => setSearchType(e.target.value as PropertyType | 'all')}
-                      className="w-full text-xs sm:text-sm text-slate-700 bg-transparent border-0 p-0 focus:ring-0 focus:outline-none cursor-pointer truncate"
-                    >
-                      <option value="all">Chambre, Studio, Appart...</option>
-                      <option value="studio">Studio</option>
-                      <option value="chambre">Chambre</option>
-                      <option value="appartement">Appartement</option>
-                      <option value="colocation">Colocation</option>
-                    </select>
-                  </div>
-
+            {/* Compact Search Console */}
+            <form
+              onSubmit={handleSearchSubmit}
+              className="bg-white p-3.5 sm:p-4 rounded-3xl border border-stone-200/90 shadow-xl shadow-stone-200/50 space-y-3 backdrop-blur-md"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                
+                {/* Neighborhood Input */}
+                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-[#F59E0B]" />
+                    {t('hero_field_neighborhood')}
+                  </label>
+                  <input
+                    type="text"
+                    value={neighborhood}
+                    onChange={(e) => setNeighborhood(e.target.value)}
+                    placeholder={t('hero_field_neighborhood_placeholder')}
+                    className="w-full bg-transparent text-xs sm:text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none mt-0.5"
+                  />
                 </div>
 
-                {/* Bottom Row / Search CTA Button */}
-                <div className="pt-2 flex justify-end">
-                  <button
-                    type="submit"
-                    className="w-full sm:w-auto px-6 py-2.5 bg-[#0B132B] hover:bg-[#1E293B] text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 shadow-md transition-all active:scale-98 cursor-pointer"
+                {/* Housing Type Select */}
+                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block flex items-center gap-1">
+                    <Home className="w-3 h-3 text-blue-500" />
+                    {t('hero_field_type')}
+                  </label>
+                  <select
+                    value={propertyType}
+                    onChange={(e) => setPropertyType(e.target.value)}
+                    className="w-full bg-transparent text-xs sm:text-sm font-semibold text-slate-900 focus:outline-none mt-0.5 cursor-pointer"
                   >
-                    <Search className="w-4 h-4 text-white" />
-                    <span>Rechercher</span>
-                  </button>
+                    <option value="all">{t('hero_type_all')}</option>
+                    <option value="studio">{t('hero_type_studio')}</option>
+                    <option value="chambre">{t('hero_type_chambre')}</option>
+                    <option value="appartement">{t('hero_type_appartement')}</option>
+                    <option value="colocation">{t('hero_type_colocation')}</option>
+                  </select>
                 </div>
-              </form>
-            </div>
 
-            {/* Social Proof Stack (Avatars + 5 000 étudiants) */}
-            <div className="flex items-center gap-3 pt-2">
+                {/* Max Budget Input */}
+                <div className="bg-stone-50/80 hover:bg-stone-50 p-2.5 rounded-2xl border border-stone-200/70 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block flex items-center gap-1">
+                    <Coins className="w-3 h-3 text-emerald-500" />
+                    {t('hero_field_max_budget')}
+                  </label>
+                  <input
+                    type="number"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                    placeholder="Ex: 80 000 FCFA"
+                    className="w-full bg-transparent text-xs sm:text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none mt-0.5"
+                  />
+                </div>
+
+              </div>
+
+              {/* Submit CTA */}
+              <button
+                type="submit"
+                className="w-full py-3.5 bg-[#0B132B] hover:bg-[#1E293B] text-white font-bold text-sm rounded-2xl shadow-lg shadow-slate-900/20 transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Search className="w-4 h-4 text-[#F59E0B]" />
+                <span>{t('hero_search_cta')}</span>
+              </button>
+            </form>
+
+            {/* Social Proof */}
+            <div className="flex items-center gap-3 pt-1">
               <div className="flex -space-x-2 overflow-hidden">
                 <img
                   className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
                   src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=120&q=80"
                   alt="Student 1"
+                  referrerPolicy="no-referrer"
                 />
                 <img
                   className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
                   alt="Student 2"
+                  referrerPolicy="no-referrer"
                 />
                 <img
                   className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
                   src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=120&q=80"
                   alt="Student 3"
+                  referrerPolicy="no-referrer"
                 />
               </div>
-              <p className="text-xs sm:text-sm text-slate-600">
-                Rejoint par plus de <strong className="font-bold text-[#0B132B] underline decoration-[#F59E0B]">5 000</strong> étudiants à travers le pays
+              <p className="text-xs text-slate-600 font-medium">
+                {t('hero_social_proof')}
               </p>
             </div>
+          </motion.div>
 
-          </div>
-
-          {/* Right Column: Hero Portrait Mask with Arched Top & Floating Badge */}
-          <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[380px] sm:max-w-[420px] aspect-[4/5] rounded-t-[180px] rounded-b-[40px] overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
-              <img
-                src={HERO_STUDENT_IMG}
-                alt="Étudiant souriant Waaloge"
-                className="w-full h-full object-cover object-center scale-105 hover:scale-100 transition-transform duration-700"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-
-            {/* FLOATING STATS BADGE (Visites réservées 12 450+ 📈) */}
-            <div className="absolute bottom-6 right-0 sm:-right-4 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500">
-              <div>
-                <span className="text-[11px] font-medium text-slate-500 block">
-                  Visites réservées
-                </span>
-                <span className="text-lg sm:text-xl font-black text-[#0B132B] block tracking-tight">
-                  12 450+
-                </span>
-              </div>
+          {/* Right Column: Hero Visual Showcase */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.94, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
+            className="lg:col-span-5 relative"
+          >
+            <div className="relative mx-auto max-w-md lg:max-w-none">
               
-              {/* Green trend line chart icon */}
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <TrendingUp className="w-5 h-5" />
-              </div>
-            </div>
+              {/* Animated pulsating gradient glow */}
+              <motion.div 
+                animate={{ 
+                  scale: [1, 1.06, 1],
+                  opacity: [0.35, 0.6, 0.35]
+                }}
+                transition={{ 
+                  duration: 5, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="absolute -inset-4 bg-gradient-to-tr from-[#F59E0B]/30 via-amber-300/20 to-blue-600/20 rounded-3xl blur-2xl -z-10" 
+              />
 
-          </div>
+              {/* Floating Top-Right Mini Badge */}
+              <motion.div
+                initial={{ opacity: 0, x: 20, y: -10 }}
+                animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
+                transition={{
+                  opacity: { delay: 0.4, duration: 0.5 },
+                  x: { delay: 0.4, duration: 0.5 },
+                  y: { repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0.5 }
+                }}
+                className="absolute -top-3 -right-2 z-20 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-amber-200/80 shadow-lg flex items-center gap-1.5 text-xs font-black text-[#0B132B]"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+                <span>Étudiante 2026</span>
+              </motion.div>
+
+              {/* Main Image Frame with Gentle Floating Motion */}
+              <motion.div 
+                animate={{ y: [0, -6, 0] }}
+                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 group"
+              >
+                <img
+                  src={HERO_STUDENT_IMG}
+                  alt="Étudiante Waaloge"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/85 via-black/20 to-transparent" />
+
+                {/* Floating Bottom Card */}
+                <motion.div 
+                  initial={{ y: 25, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.45, duration: 0.55, ease: [0.22, 1, 0.36, 1] as const }}
+                  className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-white/50 shadow-xl flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-[#D97706] shadow-xs">
+                      <CalendarCheck2 className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider block">
+                        {t('hero_badge_stat_title')}
+                      </span>
+                      <span className="text-base font-black text-slate-900">
+                        {t('hero_badge_stat_val')}
+                      </span>
+                    </div>
+                  </div>
+
+                  <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200 shadow-2xs flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>100% Gratuit</span>
+                  </span>
+                </motion.div>
+              </motion.div>
+
+            </div>
+          </motion.div>
 
         </div>
-      </section>
+      </motion.section>
 
       {/* ========================================================================= */}
-      {/* 2. SECTION: COMMENT ÇA MARCHE (4 ÉTAPES) */}
+      {/* 2. CHIC FEATURED PROPERTIES CAROUSEL */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-24 bg-white border-y border-stone-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          
-          {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 sm:mb-16">
-            <div>
-              <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
-                COMMENT ÇA MARCHE
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B] tracking-tight">
-                Un parcours simple en <span className="text-[#F59E0B]">4 étapes</span>
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-md leading-relaxed">
-              Waaloge te guide à chaque étape pour trouver et visiter le logement qui te correspond, en toute sérénité.
-            </p>
-          </div>
-
-          {/* 4 Connected Steps Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-            
-            {/* Step 1: Je cherche */}
-            <div className="bg-[#FAF9F6] rounded-2xl p-6 border border-stone-200/60 shadow-xs hover:shadow-md transition-all relative flex flex-col items-start text-left">
-              {/* Step Icon Badge */}
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-4 shadow-2xs">
-                <div className="relative">
-                  <Search className="w-6 h-6 text-blue-600" />
-                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#F59E0B] rounded-full" />
-                </div>
-              </div>
-
-              {/* Step Number Tag */}
-              <span className="inline-block px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-[11px] font-bold mb-3">
-                01
-              </span>
-
-              <h3 className="text-base font-bold text-[#0B132B] mb-2">
-                Je cherche
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Je renseigne mon quartier, mon budget et le type de logement que je recherche.
-              </p>
-            </div>
-
-            {/* Step 2: Je découvre */}
-            <div className="bg-[#FAF9F6] rounded-2xl p-6 border border-stone-200/60 shadow-xs hover:shadow-md transition-all relative flex flex-col items-start text-left">
-              {/* Step Icon Badge */}
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-4 shadow-2xs">
-                <div className="relative">
-                  <Layers className="w-6 h-6 text-blue-600" />
-                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#F59E0B] rounded-full" />
-                </div>
-              </div>
-
-              {/* Step Number Tag */}
-              <span className="inline-block px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-[11px] font-bold mb-3">
-                02
-              </span>
-
-              <h3 className="text-base font-bold text-[#0B132B] mb-2">
-                Je découvre
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Je consulte les photos, les équipements, les avis et la distance avec mon campus.
-              </p>
-            </div>
-
-            {/* Step 3: Je réserve */}
-            <div className="bg-[#FAF9F6] rounded-2xl p-6 border border-stone-200/60 shadow-xs hover:shadow-md transition-all relative flex flex-col items-start text-left">
-              {/* Step Icon Badge */}
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-4 shadow-2xs">
-                <div className="relative">
-                  <CalendarCheck className="w-6 h-6 text-blue-600" />
-                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#F59E0B] rounded-full" />
-                </div>
-              </div>
-
-              {/* Step Number Tag */}
-              <span className="inline-block px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-[11px] font-bold mb-3">
-                03
-              </span>
-
-              <h3 className="text-base font-bold text-[#0B132B] mb-2">
-                Je réserve
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Je choisis un créneau disponible pour visiter le logement sans me déplacer.
-              </p>
-            </div>
-
-            {/* Step 4: Je m'installe */}
-            <div className="bg-[#FAF9F6] rounded-2xl p-6 border border-stone-200/60 shadow-xs hover:shadow-md transition-all relative flex flex-col items-start text-left">
-              {/* Step Icon Badge */}
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-4 shadow-2xs">
-                <div className="relative">
-                  <ShieldCheck className="w-6 h-6 text-blue-600" />
-                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#F59E0B] rounded-full" />
-                </div>
-              </div>
-
-              {/* Step Number Tag */}
-              <span className="inline-block px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-[11px] font-bold mb-3">
-                04
-              </span>
-
-              <h3 className="text-base font-bold text-[#0B132B] mb-2">
-                Je m'installe
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Je rencontre le logement dans la réalité et je poursuis mon installation sereinement.
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 3. SECTION: LOGEMENTS POPULAIRES (EXACT 4 CARDS AS IN THE MOCKUP) */}
-      {/* ========================================================================= */}
-      <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6">
-        
-        {/* Section Header */}
-        <div className="flex items-center justify-between gap-4 mb-10">
+      <motion.section 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
-              LOGEMENTS POPULAIRES
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B] tracking-tight">
-              Des logements qui pourraient <span className="text-[#F59E0B]">te correspondre</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-bold uppercase tracking-wider mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+              <span>{t('popular_badge')}</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#0B132B] tracking-tight">
+              {t('popular_title')} <span className="text-[#F59E0B]">{t('popular_title_highlight')}</span>
             </h2>
           </div>
 
           <button
             type="button"
             onClick={() => onNavigate('explore')}
-            className="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1.5 transition-colors cursor-pointer group"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors cursor-pointer group"
           >
-            <span>Voir tous les logements</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <span>{t('popular_view_all')}</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
 
-        {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {popularProperties.map((prop, idx) => {
-            const isFav = isFavorite(prop.id);
-            return (
-              <div
-                key={prop.id}
-                onClick={() => handlePropertyClick(prop.id)}
-                className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col"
-              >
-                {/* Image Container with Badges */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-                  <img
-                    src={prop.images[0]}
-                    alt={prop.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
-                  />
-
-                  {/* Top Status Badge */}
-                  <div className="absolute top-3 left-3">
-                    {prop.availability === 'disponible' ? (
-                      <span className="px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[11px] font-bold shadow-xs">
-                        Disponible
-                      </span>
-                    ) : (
-                      <span className="px-2.5 py-1 rounded-full bg-[#F59E0B] text-white text-[11px] font-bold shadow-xs">
-                        Bientôt libre
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Top Right Favorite Button */}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(prop.id);
-                    }}
-                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-slate-700 hover:text-rose-500 hover:bg-white shadow-xs transition-colors"
-                  >
-                    <Heart className={`w-4 h-4 ${isFav ? 'text-rose-500 fill-rose-500' : ''}`} />
-                  </button>
-
-                  {/* Bottom Distance Pill (e.g. 📍 1,2 km) */}
-                  <div className="absolute bottom-3 left-3">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/95 backdrop-blur-xs text-[11px] font-bold text-slate-800 shadow-xs">
-                      <MapPin className="w-3 h-3 text-[#F59E0B]" />
-                      {idx === 0 && '1,2 km'}
-                      {idx === 1 && '2,5 km'}
-                      {idx === 2 && '3,1 km'}
-                      {idx === 3 && '1,9 km'}
-                      {idx > 3 && `${prop.campusMinutesWalk} min`}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Card Content Details */}
-                <div className="p-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-sm sm:text-base font-bold text-[#0B132B] truncate group-hover:text-blue-600 transition-colors">
-                      {prop.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 mt-0.5 truncate">
-                      {prop.neighborhood}
-                    </p>
-
-                    {/* Price */}
-                    <div className="mt-3">
-                      <span className="text-base sm:text-lg font-black text-blue-700">
-                        {prop.price.toLocaleString('fr-FR')} {prop.currency}
-                      </span>
-                      <span className="text-xs text-slate-500"> / mois</span>
-                    </div>
-                  </div>
-
-                  {/* Amenities Row */}
-                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-600 font-medium">
-                    {idx === 0 && (
-                      <>
-                        <span className="flex items-center gap-1">
-                          <BedDouble className="w-3.5 h-3.5 text-slate-400" /> Studio
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <ShowerHead className="w-3.5 h-3.5 text-slate-400" /> 1 SDB
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Wifi className="w-3.5 h-3.5 text-slate-400" /> Wi-Fi
-                        </span>
-                      </>
-                    )}
-
-                    {idx === 1 && (
-                      <>
-                        <span className="flex items-center gap-1">
-                          <BedDouble className="w-3.5 h-3.5 text-slate-400" /> Chambre
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <ShowerHead className="w-3.5 h-3.5 text-slate-400" /> 1 SDB
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Droplets className="w-3.5 h-3.5 text-slate-400" /> Eau 24h/24
-                        </span>
-                      </>
-                    )}
-
-                    {idx === 2 && (
-                      <>
-                        <span className="flex items-center gap-1">
-                          <DoorOpen className="w-3.5 h-3.5 text-slate-400" /> 2 pièces
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <ShowerHead className="w-3.5 h-3.5 text-slate-400" /> 2 SDB
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <UtensilsCrossed className="w-3.5 h-3.5 text-slate-400" /> Cuisine
-                        </span>
-                      </>
-                    )}
-
-                    {idx === 3 && (
-                      <>
-                        <span className="flex items-center gap-1">
-                          <BedDouble className="w-3.5 h-3.5 text-slate-400" /> Studio
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <ShowerHead className="w-3.5 h-3.5 text-slate-400" /> 1 SDB
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Sparkles className="w-3.5 h-3.5 text-slate-400" /> Balcon
-                        </span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Carousel indicator dots */}
-        <div className="flex items-center justify-center gap-1.5 mt-8">
-          <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-          <span className="w-2 h-2 rounded-full bg-slate-300" />
-          <span className="w-2 h-2 rounded-full bg-slate-300" />
-          <span className="w-2 h-2 rounded-full bg-slate-300" />
-          <span className="w-2 h-2 rounded-full bg-slate-300" />
-        </div>
-
-      </section>
+        {/* Chic Property Carousel with Animations */}
+        <PropertyCarousel
+          properties={properties}
+          onSelectProperty={onSelectProperty}
+          onOpenBooking={onOpenBooking}
+        />
+      </motion.section>
 
       {/* ========================================================================= */}
-      {/* 4. SECTION: VALUE PROPOSITIONS (4 PILLARS) */}
+      {/* 3. THE 4-STEP STUDENT JOURNEY */}
       {/* ========================================================================= */}
-      <section className="py-12 bg-white border-y border-stone-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-stone-200">
+      <motion.section 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6"
+      >
+        <div className="bg-gradient-to-br from-stone-50/90 via-stone-50/60 to-amber-50/30 rounded-3xl p-6 sm:p-12 border border-stone-200 shadow-sm space-y-8">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#F59E0B]">
+              {t('how_section_badge')}
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#0B132B]">
+              {t('how_section_title')} <span className="text-[#F59E0B]">{t('how_section_title_highlight')}</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500">
+              {t('how_section_desc')}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            {/* Pillar 1 */}
-            <div className="pt-4 sm:pt-0 sm:px-4 flex flex-col items-start text-left">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
-                <ShieldCheck className="w-6 h-6" />
+            {/* Step 1 */}
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs hover:shadow-md hover:border-amber-200 transition-all space-y-3"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-amber-100/80 text-[#D97706] font-black text-lg flex items-center justify-center shadow-xs">
+                01
               </div>
-              <h4 className="text-sm font-bold text-[#0B132B] mb-1">
-                Logements vérifiés
-              </h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Tous les logements sont vérifiés par notre équipe pour ta sécurité.
-              </p>
-            </div>
+              <h3 className="text-base font-bold text-slate-900">{t('step_1_title')}</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">{t('step_1_desc')}</p>
+            </motion.div>
 
-            {/* Pillar 2 */}
-            <div className="pt-4 sm:pt-0 sm:px-4 flex flex-col items-start text-left">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
-                <CalendarCheck className="w-6 h-6" />
+            {/* Step 2 */}
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs hover:shadow-md hover:border-blue-200 transition-all space-y-3"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-blue-100/80 text-blue-700 font-black text-lg flex items-center justify-center shadow-xs">
+                02
               </div>
-              <h4 className="text-sm font-bold text-[#0B132B] mb-1">
-                Visites organisées
-              </h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Réserve en ligne et choisis le créneau qui te convient.
-              </p>
-            </div>
+              <h3 className="text-base font-bold text-slate-900">{t('step_2_title')}</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">{t('step_2_desc')}</p>
+            </motion.div>
 
-            {/* Pillar 3 */}
-            <div className="pt-4 sm:pt-0 sm:px-4 flex flex-col items-start text-left">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
-                <MessageSquareHeart className="w-6 h-6" />
+            {/* Step 3 */}
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs hover:shadow-md hover:border-emerald-200 transition-all space-y-3"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-emerald-100/80 text-emerald-700 font-black text-lg flex items-center justify-center shadow-xs">
+                03
               </div>
-              <h4 className="text-sm font-bold text-[#0B132B] mb-1">
-                Accompagnement humain
-              </h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Notre équipe est disponible pour t'accompagner à chaque étape.
-              </p>
-            </div>
+              <h3 className="text-base font-bold text-slate-900">{t('step_3_title')}</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">{t('step_3_desc')}</p>
+            </motion.div>
 
-            {/* Pillar 4 */}
-            <div className="pt-4 sm:pt-0 sm:px-4 flex flex-col items-start text-left">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
-                <Lock className="w-6 h-6" />
+            {/* Step 4 */}
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs hover:shadow-md hover:border-purple-200 transition-all space-y-3"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-purple-100/80 text-purple-700 font-black text-lg flex items-center justify-center shadow-xs">
+                04
               </div>
-              <h4 className="text-sm font-bold text-[#0B132B] mb-1">
-                Paiement sécurisé
-              </h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Paiement mobile money ou en main propre, validé par l'admin.
-              </p>
-            </div>
+              <h3 className="text-base font-bold text-slate-900">{t('step_4_title')}</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">{t('step_4_desc')}</p>
+            </motion.div>
 
           </div>
+
         </div>
-      </section>
+      </motion.section>
 
       {/* ========================================================================= */}
-      {/* 5. SECTION: TESTIMONIALS (CE QUE DISENT LES ÉTUDIANTS) */}
+      {/* 4. INTERACTIVE STUDENT BUDGET SIMULATOR */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6">
-        
-        {/* Section Header */}
-        <div className="flex items-center justify-between gap-4 mb-10">
+      <motion.section 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6"
+      >
+        <BudgetSimulator onSearchBudget={handleQuickBudgetSearch} />
+      </motion.section>
+
+      {/* ========================================================================= */}
+      {/* 5. INTERACTIVE NEIGHBORHOOD & CAMPUS GUIDE */}
+      {/* ========================================================================= */}
+      <motion.section 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6"
+      >
+        <NeighborhoodExplorer onSelectNeighborhood={handleQuickNeighborhoodSearch} />
+      </motion.section>
+
+      {/* ========================================================================= */}
+      {/* 6. TRUST & SAFETY CHARTER */}
+      {/* ========================================================================= */}
+      <motion.section 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 space-y-8"
+      >
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#F59E0B]">
+            {t('trust_badge')}
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-black text-[#0B132B]">
+            {t('trust_title')} <span className="text-[#F59E0B]">{t('trust_title_highlight')}</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ y: -5 }}
+            className="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs hover:shadow-md transition-all space-y-3"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-[#D97706] flex items-center justify-center">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-bold text-slate-900">{t('trust_1_title')}</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">{t('trust_1_desc')}</p>
+          </motion.div>
+
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ y: -5 }}
+            className="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs hover:shadow-md transition-all space-y-3"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <CalendarCheck2 className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-bold text-slate-900">{t('trust_2_title')}</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">{t('trust_2_desc')}</p>
+          </motion.div>
+
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ y: -5 }}
+            className="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs hover:shadow-md transition-all space-y-3"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <Users className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-bold text-slate-900">{t('trust_3_title')}</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">{t('trust_3_desc')}</p>
+          </motion.div>
+
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ y: -5 }}
+            className="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs hover:shadow-md transition-all space-y-3"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center">
+              <Coins className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-bold text-slate-900">{t('trust_4_title')}</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">{t('trust_4_desc')}</p>
+          </motion.div>
+
+        </div>
+      </motion.section>
+
+      {/* ========================================================================= */}
+      {/* 7. STUDENT LIFE GUIDES & PRACTICAL TIPS */}
+      {/* ========================================================================= */}
+      <motion.section 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
-              ILS NOUS FONT CONFIANCE
-            </span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>{t('guides_badge')}</span>
+            </div>
             <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B] tracking-tight">
-              Ce que disent <span className="text-[#F59E0B]">les étudiants</span>
+              {t('guides_title')} <span className="text-[#F59E0B]">{t('guides_title_highlight')}</span>
             </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              {t('guides_subtitle')}
+            </p>
           </div>
 
           <button
             type="button"
             onClick={() => onNavigate('about')}
-            className="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1.5 transition-colors cursor-pointer group"
+            className="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors cursor-pointer flex items-center gap-1"
           >
-            <span>Voir tous les avis</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <span>Voir tous les guides</span>
+            <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        {/* 3 Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
-          {/* Review 1: Aminata K. */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
-            <div>
-              <span className="text-3xl text-blue-500 font-serif leading-none block mb-3">“</span>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Grâce à Waaloge, j'ai trouvé mon studio avant même d'arriver à Ouaga. La visite s'est très bien passée et le logement est exactement comme sur les photos !
-              </p>
+          {/* Guide 1 */}
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ y: -6, transition: { duration: 0.25 } }}
+            onClick={() => onNavigate('about')}
+            className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-lg transition-all group cursor-pointer flex flex-col justify-between"
+          >
+            <div className="aspect-[16/10] overflow-hidden bg-slate-900">
+              <img
+                src="https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80"
+                alt="Guide 1"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                referrerPolicy="no-referrer"
+              />
             </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
-                  alt="Aminata K."
-                  className="w-10 h-10 rounded-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                <div>
-                  <h4 className="text-xs font-bold text-[#0B132B]">Aminata K.</h4>
-                  <p className="text-[11px] text-slate-400">Étudiante en Génie Civil</p>
+            <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-[11px] font-bold">
+                  <span className="text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+                    {t('guide_1_category')}
+                  </span>
+                  <span className="text-slate-400 flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {t('guide_1_read_time')}
+                  </span>
                 </div>
+                <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  {t('guide_1_title')}
+                </h3>
               </div>
-
-              <div className="flex items-center gap-1 text-[11px] font-bold text-slate-800">
-                <span className="text-[#F59E0B]">★★★★★</span>
-                <span>5.0</span>
-              </div>
+              <span className="text-xs font-bold text-[#F59E0B] flex items-center gap-1 pt-3">
+                {t('guide_read_more')} <ArrowRight className="w-3.5 h-3.5" />
+              </span>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Review 2: Issa T. */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
-            <div>
-              <span className="text-3xl text-blue-500 font-serif leading-none block mb-3">“</span>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Le processus de réservation est simple et l'équipe est vraiment réactive. Je recommande à tous les nouveaux étudiants !
-              </p>
+          {/* Guide 2 */}
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ y: -6, transition: { duration: 0.25 } }}
+            onClick={() => onNavigate('about')}
+            className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-lg transition-all group cursor-pointer flex flex-col justify-between"
+          >
+            <div className="aspect-[16/10] overflow-hidden bg-slate-900">
+              <img
+                src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80"
+                alt="Guide 2"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                referrerPolicy="no-referrer"
+              />
             </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
-                  alt="Issa T."
-                  className="w-10 h-10 rounded-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                <div>
-                  <h4 className="text-xs font-bold text-[#0B132B]">Issa T.</h4>
-                  <p className="text-[11px] text-slate-400">Étudiant en Informatique</p>
+            <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-[11px] font-bold">
+                  <span className="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+                    {t('guide_2_category')}
+                  </span>
+                  <span className="text-slate-400 flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {t('guide_2_read_time')}
+                  </span>
                 </div>
+                <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  {t('guide_2_title')}
+                </h3>
               </div>
-
-              <div className="flex items-center gap-1 text-[11px] font-bold text-slate-800">
-                <span className="text-[#F59E0B]">★★★★★</span>
-                <span>5.0</span>
-              </div>
+              <span className="text-xs font-bold text-[#F59E0B] flex items-center gap-1 pt-3">
+                {t('guide_read_more')} <ArrowRight className="w-3.5 h-3.5" />
+              </span>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Review 3: Mariam D. */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
-            <div>
-              <span className="text-3xl text-blue-500 font-serif leading-none block mb-3">“</span>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                J'ai pu comparer plusieurs logements et choisir celui qui correspondait à mon budget et mon emplacement. Très bonne expérience.
-              </p>
+          {/* Guide 3 */}
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ y: -6, transition: { duration: 0.25 } }}
+            onClick={() => onNavigate('about')}
+            className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-lg transition-all group cursor-pointer flex flex-col justify-between"
+          >
+            <div className="aspect-[16/10] overflow-hidden bg-slate-900">
+              <img
+                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80"
+                alt="Guide 3"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                referrerPolicy="no-referrer"
+              />
             </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80"
-                  alt="Mariam D."
-                  className="w-10 h-10 rounded-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                <div>
-                  <h4 className="text-xs font-bold text-[#0B132B]">Mariam D.</h4>
-                  <p className="text-[11px] text-slate-400">Étudiante en Droit</p>
+            <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-[11px] font-bold">
+                  <span className="text-purple-600 bg-purple-50 px-2 py-0.5 rounded-md">
+                    {t('guide_3_category')}
+                  </span>
+                  <span className="text-slate-400 flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {t('guide_3_read_time')}
+                  </span>
                 </div>
+                <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  {t('guide_3_title')}
+                </h3>
               </div>
-
-              <div className="flex items-center gap-1 text-[11px] font-bold text-slate-800">
-                <span className="text-[#F59E0B]">★★★★★</span>
-                <span>5.0</span>
-              </div>
+              <span className="text-xs font-bold text-[#F59E0B] flex items-center gap-1 pt-3">
+                {t('guide_read_more')} <ArrowRight className="w-3.5 h-3.5" />
+              </span>
             </div>
-          </div>
+          </motion.div>
 
         </div>
-
-      </section>
+      </motion.section>
 
       {/* ========================================================================= */}
-      {/* 6. SECTION: BOTTOM CALL TO ACTION BANNER (PRÊT À TROUVER TON PROCHAIN CHEZ-TOI ?) */}
+      {/* 8. FAQ ACCORDION */}
       {/* ========================================================================= */}
-      <section className="py-10 max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-[#FFF8F0] rounded-3xl p-6 sm:p-10 border border-amber-100 shadow-sm relative overflow-hidden">
+      <motion.section 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6"
+      >
+        <div className="text-center max-w-xl mx-auto space-y-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#F59E0B]">
+            {t('faq_badge')}
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B]">
+            {t('faq_title')} <span className="text-[#F59E0B]">{t('faq_title_highlight')}</span>
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500">
+            {t('faq_subtitle')}
+          </p>
+        </div>
+
+        <FaqAccordion />
+      </motion.section>
+
+      {/* ========================================================================= */}
+      {/* 9. HIGH-CONVERSION CTA BANNER */}
+      {/* ========================================================================= */}
+      <motion.section 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6"
+      >
+        <div className="relative overflow-hidden rounded-3xl bg-[#0B132B] text-white p-8 sm:p-14 border border-slate-800 shadow-2xl">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            
-            {/* Left Texts */}
-            <div className="lg:col-span-5 space-y-3 text-left">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#0B132B] tracking-tight leading-tight">
-                Prêt à trouver ton<br />
-                prochain <span className="text-[#F59E0B]">chez-toi</span> ?
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600">
-                Rejoins des milliers d'étudiants et réserve ta visite dès aujourd'hui.
-              </p>
-            </div>
+          {/* Ambient Glow */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#F59E0B]/20 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Center: Student Cutout Image */}
-            <div className="lg:col-span-3 flex justify-center">
-              <div className="w-40 sm:w-48 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-amber-50/50">
-                <img
-                  src={CTA_STUDENT_IMG}
-                  alt="Étudiante avec sac et téléphone"
-                  className="w-full h-full object-cover object-center"
-                  referrerPolicy="no-referrer"
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            
+            <div className="lg:col-span-8 space-y-4">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F59E0B]">
+                Waaloge 2026
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+                {t('cta_title_1')} <span className="text-[#F59E0B]">{t('cta_title_2')}</span> {t('cta_title_3')}
+              </h2>
+              <p className="text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">
+                {t('cta_subtitle')}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => onNavigate('explore')}
+                  className="px-6 py-3.5 bg-[#F59E0B] hover:bg-[#D97706] text-[#0B132B] font-black text-sm rounded-xl shadow-lg transition-all active:scale-98 cursor-pointer flex items-center gap-2"
+                >
+                  <span>{t('cta_explore')}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => onNavigate('how-it-works')}
+                  className="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-sm rounded-xl border border-white/20 transition-all cursor-pointer"
+                >
+                  {t('cta_how')}
+                </button>
               </div>
             </div>
 
-            {/* Right Buttons */}
-            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
-              <button
-                type="button"
-                onClick={() => onNavigate('explore')}
-                className="w-full py-3 px-6 bg-[#0B132B] hover:bg-[#1E293B] text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition-all active:scale-98 cursor-pointer text-center"
-              >
-                Explorer les logements
-              </button>
+            {/* Right student circle showcase */}
+            <div className="lg:col-span-4 flex justify-center lg:justify-end">
+              <div className="relative">
+                <div className="w-44 h-44 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-[#F59E0B] shadow-2xl bg-slate-800">
+                  <img
+                    src={CTA_STUDENT_IMG}
+                    alt="Étudiante Waaloge"
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
 
-              <button
-                type="button"
-                onClick={() => onNavigate('how-it-works')}
-                className="w-full py-3 px-6 bg-white hover:bg-slate-50 text-[#0B132B] border border-[#0B132B]/30 text-xs sm:text-sm font-bold rounded-xl transition-all active:scale-98 cursor-pointer text-center"
-              >
-                Comment ça marche ?
-              </button>
+                <div className="absolute -bottom-2 -left-2 bg-white text-slate-900 px-3 py-1.5 rounded-xl text-xs font-black shadow-lg flex items-center gap-1.5 border border-stone-100">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                  <span>100% Vérifié</span>
+                </div>
+              </div>
             </div>
 
           </div>
 
         </div>
-      </section>
+      </motion.section>
 
     </div>
   );

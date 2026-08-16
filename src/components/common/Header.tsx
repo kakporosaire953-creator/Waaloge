@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAssistant
 }) => {
   const { user, isAuthenticated, logout } = useAuth();
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const { favorites, unreadNotificationsCount, notifications, markNotificationAsRead } = useBookings();
 
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -43,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b border-stone-100 shadow-2xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 min-h-[105px] py-1.5 flex items-center justify-between gap-4">
         
         {/* LEFT: BRAND LOGO */}
         <div className="flex items-center">
@@ -54,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({
           />
         </div>
 
-        {/* CENTER: DESKTOP NAVIGATION (EXACTLY AS IN THE MOCKUP) */}
+        {/* CENTER: DESKTOP NAVIGATION (I18N TRANSLATED) */}
         <nav className="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-700">
           <button
             type="button"
@@ -65,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Accueil
+            {t('nav_home')}
             {currentTab === 'home' && (
               <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F59E0B] rounded-full" />
             )}
@@ -80,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Explorer
+            {t('nav_explore')}
             {currentTab === 'explore' && (
               <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F59E0B] rounded-full" />
             )}
@@ -95,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Comment ça marche
+            {t('nav_how_it_works')}
             {currentTab === 'how-it-works' && (
               <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F59E0B] rounded-full" />
             )}
@@ -110,14 +110,14 @@ export const Header: React.FC<HeaderProps> = ({
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            À propos
+            {t('nav_about')}
             {currentTab === 'about' && (
               <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F59E0B] rounded-full" />
             )}
           </button>
         </nav>
 
-        {/* RIGHT: LANGUAGE & AUTH BUTTONS (EXACTLY AS IN THE MOCKUP) */}
+        {/* RIGHT: LANGUAGE & AUTH BUTTONS */}
         <div className="flex items-center gap-3">
           
           {/* Language Selector Dropdown */}
@@ -140,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setLanguage('fr');
                     setIsLangOpen(false);
                   }}
-                  className={`w-full text-left px-3 py-1.5 hover:bg-slate-50 flex items-center justify-between ${
+                  className={`w-full text-left px-3 py-1.5 hover:bg-slate-50 flex items-center justify-between cursor-pointer ${
                     language === 'fr' ? 'font-bold text-[#F59E0B]' : 'text-slate-700'
                   }`}
                 >
@@ -153,7 +153,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setLanguage('en');
                     setIsLangOpen(false);
                   }}
-                  className={`w-full text-left px-3 py-1.5 hover:bg-slate-50 flex items-center justify-between ${
+                  className={`w-full text-left px-3 py-1.5 hover:bg-slate-50 flex items-center justify-between cursor-pointer ${
                     language === 'en' ? 'font-bold text-[#F59E0B]' : 'text-slate-700'
                   }`}
                 >
@@ -172,7 +172,7 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 onClick={() => onNavigate('favorites')}
                 className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg relative cursor-pointer"
-                title="Mes favoris"
+                title={t('nav_favorites')}
               >
                 <Heart className={`w-4 h-4 ${favorites.length > 0 ? 'text-rose-500 fill-rose-500' : ''}`} />
                 {favorites.length > 0 && (
@@ -210,10 +210,10 @@ export const Header: React.FC<HeaderProps> = ({
                         setIsUserMenuOpen(false);
                         onNavigate('dashboard');
                       }}
-                      className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 font-medium"
+                      className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 font-medium cursor-pointer"
                     >
                       <CalendarCheck2 className="w-4 h-4 text-[#F59E0B]" />
-                      Mes réservations
+                      {t('nav_my_bookings')}
                     </button>
                     <button
                       type="button"
@@ -221,10 +221,10 @@ export const Header: React.FC<HeaderProps> = ({
                         setIsUserMenuOpen(false);
                         onNavigate('profile');
                       }}
-                      className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 font-medium"
+                      className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 font-medium cursor-pointer"
                     >
                       <UserIcon className="w-4 h-4 text-slate-500" />
-                      Mon compte
+                      {t('nav_my_account')}
                     </button>
                     <div className="border-t border-stone-100 pt-1 mt-1">
                       <button
@@ -233,10 +233,10 @@ export const Header: React.FC<HeaderProps> = ({
                           setIsUserMenuOpen(false);
                           logout();
                         }}
-                        className="w-full px-3.5 py-2 text-left hover:bg-rose-50 text-rose-600 flex items-center gap-2 font-semibold"
+                        className="w-full px-3.5 py-2 text-left hover:bg-rose-50 text-rose-600 flex items-center gap-2 font-semibold cursor-pointer"
                       >
                         <LogOut className="w-4 h-4" />
-                        Se déconnecter
+                        {t('nav_logout')}
                       </button>
                     </div>
                   </div>
@@ -244,14 +244,14 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
           ) : (
-            /* EXACT BUTTONS FROM DESIGN: "Se connecter" & "S'inscrire" */
+            /* EXACT BUTTONS FROM DESIGN WITH TRANSLATION */
             <div className="flex items-center gap-2.5">
               <button
                 type="button"
                 onClick={() => onNavigate('auth')}
                 className="px-4 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:text-slate-950 rounded-lg transition-colors cursor-pointer"
               >
-                Se connecter
+                {t('nav_login')}
               </button>
 
               <button
@@ -259,7 +259,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => onNavigate('auth')}
                 className="px-4 sm:px-5 py-2 text-xs sm:text-sm font-bold text-white bg-[#F59E0B] hover:bg-[#D97706] rounded-lg shadow-sm hover:shadow-md transition-all active:scale-98 cursor-pointer"
               >
-                S'inscrire
+                {t('nav_register')}
               </button>
             </div>
           )}
@@ -286,11 +286,11 @@ export const Header: React.FC<HeaderProps> = ({
               setIsMobileMenuOpen(false);
               onNavigate('home');
             }}
-            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold ${
+            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold cursor-pointer ${
               currentTab === 'home' ? 'bg-amber-50 text-amber-900 font-bold' : 'text-slate-700'
             }`}
           >
-            Accueil
+            {t('nav_home')}
           </button>
 
           <button
@@ -299,11 +299,11 @@ export const Header: React.FC<HeaderProps> = ({
               setIsMobileMenuOpen(false);
               onNavigate('explore');
             }}
-            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold ${
+            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold cursor-pointer ${
               currentTab === 'explore' ? 'bg-amber-50 text-amber-900 font-bold' : 'text-slate-700'
             }`}
           >
-            Explorer
+            {t('nav_explore')}
           </button>
 
           <button
@@ -312,11 +312,11 @@ export const Header: React.FC<HeaderProps> = ({
               setIsMobileMenuOpen(false);
               onNavigate('how-it-works');
             }}
-            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold ${
+            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold cursor-pointer ${
               currentTab === 'how-it-works' ? 'bg-amber-50 text-amber-900 font-bold' : 'text-slate-700'
             }`}
           >
-            Comment ça marche
+            {t('nav_how_it_works')}
           </button>
 
           <button
@@ -325,11 +325,11 @@ export const Header: React.FC<HeaderProps> = ({
               setIsMobileMenuOpen(false);
               onNavigate('about');
             }}
-            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold ${
+            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold cursor-pointer ${
               currentTab === 'about' ? 'bg-amber-50 text-amber-900 font-bold' : 'text-slate-700'
             }`}
           >
-            À propos
+            {t('nav_about')}
           </button>
         </div>
       )}
