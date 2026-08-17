@@ -41,36 +41,51 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
   onNavigate,
   onOpenAssistant
 }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  const isEn = language === 'en';
 
   const steps = [
     {
       step: '01',
-      title: 'Je cherche mon futur logement',
-      desc: 'Accède à des annonces rigoureusement vérifiées sur le terrain à Abomey-Calavi, Cotonou ou Ouagadougou. Filtre par proximité avec ton campus (UAC, ENEAM, EPAC...), budget et critères essentiels (compteur individuel, eau 24/7).',
+      title: isEn ? 'Find your future home' : 'Je cherche mon futur logement',
+      desc: isEn 
+        ? 'Browse verified listings inspected on-site. Filter by proximity to your university campus (UAC, ENEAM, EPAC...), budget, and key utilities (individual meter, 24/7 water).'
+        : 'Accède à des annonces rigoureusement vérifiées sur le terrain à Abomey-Calavi, Cotonou ou Ouagadougou. Filtre par proximité avec ton campus (UAC, ENEAM, EPAC...), budget et critères essentiels (compteur individuel, eau 24/7).',
       icon: Search
     },
     {
       step: '02',
-      title: 'Je découvre le quartier et son ambiance',
-      desc: 'Consulte nos fiches quartiers détaillées pour connaître les temps de marche jusqu’aux amphis, les lignes de transport et les repères utiles pour la vie étudiante.',
+      title: isEn ? 'Explore the neighborhood & vibe' : 'Je découvre le quartier et son ambiance',
+      desc: isEn 
+        ? 'Check out detailed neighborhood guides with walking times to lecture halls, transit routes, and student lifestyle landmarks.'
+        : 'Consulte nos fiches quartiers détaillées pour connaître les temps de marche jusqu’aux amphis, les lignes de transport et les repères utiles pour la vie étudiante.',
       icon: MapPin
     },
     {
       step: '03',
-      title: 'Je réserve ma visite sans frais',
-      desc: 'Choisis le jour et le créneau horaire qui te conviennent parmi les disponibilités du propriétaire. La visite est 100% gratuite et encadrée. Aucun paiement préalable n’est requis.',
+      title: isEn ? 'Book a free visit' : 'Je réserve ma visite sans frais',
+      desc: isEn 
+        ? 'Select your preferred time slot from the landlord availability calendar. Visits are 100% free and monitored. Zero illegal advance payment required.'
+        : 'Choisis le jour et le créneau horaire qui te conviennent parmi les disponibilités du propriétaire. La visite est 100% gratuite et encadrée. Aucun paiement préalable n’est requis.',
       icon: CalendarCheck2
     },
     {
       step: '04',
-      title: 'Je visite et je m’installe',
-      desc: 'Rends-toi au point de rendez-vous convenu avec le bailleur. Vérifie l’état des lieux, signe ton contrat de bail et récupère tes clés en toute tranquillité.',
+      title: isEn ? 'Visit & move in serenely' : 'Je visite et je m’installe',
+      desc: isEn 
+        ? 'Meet the landlord at the scheduled location. Verify property condition, sign your lease agreement, and pick up your keys with peace of mind.'
+        : 'Rends-toi au point de rendez-vous convenu avec le bailleur. Vérifie l’état des lieux, signe ton contrat de bail et récupère tes clés en toute tranquillité.',
       icon: Key
     }
   ];
 
-  const safetyRules = [
+  const safetyRules = isEn ? [
+    "NEVER pay money to 'reserve' a visit or key before physically visiting the property.",
+    "Always insist on a written lease agreement and a signed receipt when paying any deposit.",
+    "Inspect water taps (pressure) and electricity meters on-site before signing.",
+    "If you suspect fraud or suspicious behavior, report it immediately to the Waaloge team."
+  ] : [
     "Ne versez JAMAIS d'argent pour 'réserver' une visite ou obtenir une clé avant d'avoir visité physiquement le logement.",
     "Exigez toujours un contrat de bail écrit et un reçu signé lors du versement de la caution.",
     "Vérifiez sur place le fonctionnement des robinets (pression d'eau) et le compteur électrique.",
@@ -89,13 +104,16 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold shadow-xs">
             <ShieldCheck className="w-4 h-4 text-amber-600" />
-            <span>La méthode Waaloge</span>
+            <span>{isEn ? 'The Waaloge Guarantee' : 'La méthode Waaloge'}</span>
           </div>
           <h1 className="font-editorial text-4xl sm:text-6xl text-[#0B132B] tracking-tight leading-tight">
-            Comment fonctionne <span className="text-[#D97706]">Waaloge ?</span>
+            {isEn ? 'How does ' : 'Comment fonctionne '}
+            <span className="text-[#D97706]">{isEn ? 'Waaloge work?' : 'Waaloge ?'}</span>
           </h1>
           <p className="text-sm sm:text-base text-slate-500 leading-relaxed font-normal">
-            Nous avons repensé la recherche de logement étudiant pour la rendre transparente, sûre et accessible à tous les jeunes d’Afrique francophone.
+            {isEn 
+              ? 'We reinvented student housing search to make it transparent, secure, and accessible to every student across West Africa.'
+              : 'Nous avons repensé la recherche de logement étudiant pour la rendre transparente, sûre et accessible à tous les jeunes d’Afrique francophone.'}
           </p>
         </motion.div>
 
@@ -108,7 +126,8 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
           className="space-y-8"
         >
           <h2 className="font-editorial text-2xl sm:text-4xl text-[#0B132B] text-center">
-            Le parcours étudiant en <span className="text-[#D97706]">4 étapes</span>
+            {isEn ? 'The Student Journey in ' : 'Le parcours étudiant en '}
+            <span className="text-[#D97706]">{isEn ? '4 Simple Steps' : '4 étapes'}</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {steps.map((s, idx) => {
@@ -152,8 +171,12 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
               <AlertTriangle className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-editorial text-2xl sm:text-3xl text-white">Charte de sécurité & Anti-arnaque</h3>
-              <p className="text-xs sm:text-sm text-slate-400">Ce que tout étudiant doit savoir avant de signer</p>
+              <h3 className="font-editorial text-2xl sm:text-3xl text-white">
+                {isEn ? 'Safety & Anti-Scam Charter' : 'Charte de sécurité & Anti-arnaque'}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400">
+                {isEn ? 'Essential guidelines before signing any lease' : 'Ce que tout étudiant doit savoir avant de signer'}
+              </p>
             </div>
           </div>
 
@@ -171,7 +194,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
 
           <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
             <span className="text-xs text-slate-400 text-center sm:text-left">
-              Un doute sur une annonce ou un comportement suspect ?
+              {isEn ? 'Need help or suspicious about a listing?' : 'Un doute sur une annonce ou un comportement suspect ?'}
             </span>
             <a
               href="https://wa.me/22997000000"
@@ -180,7 +203,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
               className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-2 transition-colors shadow-sm"
             >
               <PhoneCall className="w-4 h-4" />
-              Contacter la permanence WhatsApp
+              <span>{isEn ? 'Contact WhatsApp Support 24/7' : 'Contacter la permanence WhatsApp'}</span>
             </a>
           </div>
         </motion.div>
@@ -193,7 +216,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
           className="text-center space-y-4 pt-4"
         >
           <h3 className="font-editorial text-2xl sm:text-3xl text-[#0B132B]">
-            Prêt à trouver ton prochain chez-toi ?
+            {isEn ? 'Ready to find your student home?' : 'Prêt à trouver ton prochain chez-toi ?'}
           </h3>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button
@@ -202,14 +225,14 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
               onClick={() => onNavigate('explore')}
               rightIcon={<ArrowRight className="w-4 h-4" />}
             >
-              Explorer les logements vérifiés
+              {isEn ? 'Explore Verified Housing' : 'Explorer les logements vérifiés'}
             </Button>
             <Button
               variant="outline"
               size="lg"
               onClick={onOpenAssistant}
             >
-              Poser une question à l'assistant
+              {isEn ? 'Ask AI Student Assistant' : "Poser une question à l'assistant"}
             </Button>
           </div>
         </motion.div>

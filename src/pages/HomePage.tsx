@@ -27,10 +27,11 @@ import {
 } from 'lucide-react';
 
 import heroGraduatesImg from '../assets/images/hero_graduates.jpg';
+import ctaStudentImg from '../assets/images/cta_student.jpg';
 
 /* ── Authentic African Student Imagery ── */
 const HERO_STUDENT_IMG = heroGraduatesImg;
-const CTA_STUDENT_IMG = 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1200&q=80';
+const CTA_STUDENT_IMG = ctaStudentImg;
 
 /* ── Zigzag step images (100% Authentic African Students) ── */
 const STEP_IMGS = [
