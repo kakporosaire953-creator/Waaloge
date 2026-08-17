@@ -96,7 +96,7 @@ export const NeighborhoodExplorer: React.FC<NeighborhoodExplorerProps> = ({ onSe
             <span>{t('neighborhood_badge')}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B] tracking-tight">
-            {t('neighborhood_title')} <span className="text-[#F59E0B]">{t('neighborhood_title_highlight')}</span>
+            {t('neighborhood_title')} <span className="text-[#D97706]">{t('neighborhood_title_highlight')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
             {t('neighborhood_subtitle')}
@@ -143,7 +143,7 @@ export const NeighborhoodExplorer: React.FC<NeighborhoodExplorerProps> = ({ onSe
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
             <div className="absolute bottom-4 left-4 right-4 text-white">
-              <span className="text-xs uppercase font-bold text-[#F59E0B] tracking-wider block">
+              <span className="text-xs uppercase font-bold text-[#D97706] tracking-wider block">
                 {activeDistrict.campusName}
               </span>
               <h3 className="text-2xl font-black">{activeDistrict.name}</h3>
@@ -162,7 +162,7 @@ export const NeighborhoodExplorer: React.FC<NeighborhoodExplorerProps> = ({ onSe
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
                 <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100">
                   <span className="text-[11px] text-slate-400 font-medium block flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-[#F59E0B]" />
+                    <Clock className="w-3 h-3 text-[#D97706]" />
                     À pied du campus
                   </span>
                   <span className="text-xs sm:text-sm font-bold text-slate-900 mt-1 block">
@@ -198,7 +198,7 @@ export const NeighborhoodExplorer: React.FC<NeighborhoodExplorerProps> = ({ onSe
                   <span><strong>{t('neighborhood_transit')} :</strong> {activeDistrict.busLines.join(', ')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-slate-700">
-                  <Sparkles className="w-4 h-4 text-[#F59E0B] shrink-0" />
+                  <Sparkles className="w-4 h-4 text-[#D97706] shrink-0" />
                   <span><strong>{t('neighborhood_vibe')} :</strong> {activeDistrict.vibe}</span>
                 </div>
               </div>
@@ -212,7 +212,7 @@ export const NeighborhoodExplorer: React.FC<NeighborhoodExplorerProps> = ({ onSe
                 className="px-5 py-2.5 bg-[#0B132B] hover:bg-[#1E293B] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all active:scale-98 cursor-pointer flex items-center gap-2"
               >
                 <span>{t('neighborhood_see_listings')}</span>
-                <ArrowRight className="w-4 h-4 text-[#F59E0B]" />
+                <ArrowRight className="w-4 h-4 text-[#D97706]" />
               </button>
             </div>
 

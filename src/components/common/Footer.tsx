@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-[#F59E0B] hover:text-[#0B132B] text-slate-300 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-[#D97706] hover:text-[#0B132B] text-slate-300 flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="w-4 h-4" />
@@ -51,7 +51,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-[#F59E0B] hover:text-[#0B132B] text-slate-300 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-[#D97706] hover:text-[#0B132B] text-slate-300 flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="w-4 h-4" />
@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href="https://tiktok.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-[#F59E0B] hover:text-[#0B132B] text-slate-300 flex items-center justify-center transition-colors font-bold text-xs"
+                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-[#D97706] hover:text-[#0B132B] text-slate-300 flex items-center justify-center transition-colors font-bold text-xs"
                 aria-label="TikTok"
               >
                 <span>tk</span>
@@ -71,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-[#F59E0B] hover:text-[#0B132B] text-slate-300 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-[#D97706] hover:text-[#0B132B] text-slate-300 flex items-center justify-center transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-4 h-4" />

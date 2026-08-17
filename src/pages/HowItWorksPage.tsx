@@ -92,7 +92,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
             <span>La méthode Waaloge</span>
           </div>
           <h1 className="font-editorial text-4xl sm:text-6xl text-[#0B132B] tracking-tight leading-tight">
-            Comment fonctionne <span className="text-[#F59E0B]">Waaloge ?</span>
+            Comment fonctionne <span className="text-[#D97706]">Waaloge ?</span>
           </h1>
           <p className="text-sm sm:text-base text-slate-500 leading-relaxed font-normal">
             Nous avons repensé la recherche de logement étudiant pour la rendre transparente, sûre et accessible à tous les jeunes d’Afrique francophone.
@@ -108,7 +108,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
           className="space-y-8"
         >
           <h2 className="font-editorial text-2xl sm:text-4xl text-[#0B132B] text-center">
-            Le parcours étudiant en <span className="text-[#F59E0B]">4 étapes</span>
+            Le parcours étudiant en <span className="text-[#D97706]">4 étapes</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {steps.map((s, idx) => {
@@ -148,7 +148,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
           <div className="absolute top-0 right-0 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="flex items-center gap-4 relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-[#F59E0B] text-slate-950 flex items-center justify-center font-bold shadow-md">
+            <div className="w-12 h-12 rounded-2xl bg-[#D97706] text-slate-950 flex items-center justify-center font-bold shadow-md">
               <AlertTriangle className="w-6 h-6" />
             </div>
             <div>

@@ -54,67 +54,39 @@ export const Header: React.FC<HeaderProps> = ({
           />
         </div>
 
-        {/* CENTER: DESKTOP NAVIGATION (I18N TRANSLATED) */}
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-semibold text-slate-700">
-          <button
-            type="button"
-            onClick={() => onNavigate('home')}
-            className={`relative py-2 font-medium transition-colors cursor-pointer ${
-              currentTab === 'home'
-                ? 'text-slate-900 font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            {t('nav_home')}
-            {currentTab === 'home' && (
-              <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F59E0B] rounded-full" />
-            )}
-          </button>
+        {/* CENTER: DESKTOP NAVIGATION (I18N TRANSLATED WITH ANIMATED UNDERLINE) */}
+        <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2 text-sm font-semibold text-slate-700">
+          {[
+            { key: 'home', label: t('nav_home') },
+            { key: 'explore', label: t('nav_explore') },
+            { key: 'how-it-works', label: t('nav_how_it_works') },
+            { key: 'about', label: t('nav_about') },
+          ].map((navItem) => {
+            const isActive = currentTab === navItem.key;
+            return (
+              <button
+                key={navItem.key}
+                type="button"
+                onClick={() => onNavigate(navItem.key)}
+                className={`group relative px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer overflow-hidden ${
+                  isActive
+                    ? 'text-[#0B132B] font-bold bg-amber-50/80 border border-amber-200/50'
+                    : 'text-slate-600 hover:text-[#0B132B] hover:bg-stone-100/70'
+                }`}
+              >
+                <span className="relative z-10">{navItem.label}</span>
 
-          <button
-            type="button"
-            onClick={() => onNavigate('explore')}
-            className={`relative py-2 font-medium transition-colors cursor-pointer ${
-              currentTab === 'explore'
-                ? 'text-slate-900 font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            {t('nav_explore')}
-            {currentTab === 'explore' && (
-              <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F59E0B] rounded-full" />
-            )}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onNavigate('how-it-works')}
-            className={`relative py-2 font-medium transition-colors cursor-pointer ${
-              currentTab === 'how-it-works'
-                ? 'text-slate-900 font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            {t('nav_how_it_works')}
-            {currentTab === 'how-it-works' && (
-              <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F59E0B] rounded-full" />
-            )}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onNavigate('about')}
-            className={`relative py-2 font-medium transition-colors cursor-pointer ${
-              currentTab === 'about'
-                ? 'text-slate-900 font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            {t('nav_about')}
-            {currentTab === 'about' && (
-              <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F59E0B] rounded-full" />
-            )}
-          </button>
+                {/* Animated underline drawing from left to right */}
+                <span
+                  className={`absolute bottom-0 left-0 h-[2.5px] bg-[#D97706] rounded-full transition-all duration-300 ease-out ${
+                    isActive
+                      ? 'w-full opacity-100'
+                      : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                  }`}
+                />
+              </button>
+            );
+          })}
         </nav>
 
         {/* RIGHT: LANGUAGE & AUTH BUTTONS */}

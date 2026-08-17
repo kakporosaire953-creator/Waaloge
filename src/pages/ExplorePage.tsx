@@ -83,11 +83,11 @@ export const ExplorePage: React.FC<ExplorePageProps> = ({
           className="space-y-2"
         >
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-bold border border-amber-100">
-            <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
             <span>Catalogue 100% Vérifié</span>
           </div>
           <h1 className="font-editorial text-3xl sm:text-5xl text-[#0B132B]">
-            Trouve ton <span className="text-[#F59E0B]">logement idéal</span>
+            Trouve ton <span className="text-[#D97706]">logement idéal</span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-500">
             Explore les chambres et studios disponibles près de ton université.
@@ -109,7 +109,7 @@ export const ExplorePage: React.FC<ExplorePageProps> = ({
               value={filters.query}
               onChange={(e) => onFilterChange({ query: e.target.value })}
               placeholder={t('hero_search_placeholder')}
-              className="w-full pl-10 pr-4 py-3 bg-white border border-stone-200 rounded-2xl text-sm font-medium text-slate-900 focus:outline-none focus:border-[#F59E0B] shadow-xs transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-white border border-stone-200 rounded-2xl text-sm font-medium text-slate-900 focus:outline-none focus:border-[#D97706] shadow-xs transition-all"
             />
             {filters.query && (
               <button

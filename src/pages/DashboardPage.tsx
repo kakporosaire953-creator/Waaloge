@@ -81,7 +81,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             Espace Étudiant
           </div>
           <h1 className="font-editorial text-3xl sm:text-5xl text-[#0B132B]">
-            {t('dashboard_greeting')}, <span className="text-[#F59E0B]">{user?.name.split(' ')[0]}</span> 👋
+            {t('dashboard_greeting')}, <span className="text-[#D97706]">{user?.name.split(' ')[0]}</span> 👋
           </h1>
           <div className="flex items-center gap-2 mt-1 text-xs text-slate-500">
             <GraduationCap className="w-4 h-4 text-slate-400" />

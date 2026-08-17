@@ -167,14 +167,14 @@ export const HomePage: React.FC<HomePageProps> = ({
           >
             {/* Trust badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50/90 border border-amber-200/80 text-amber-900 text-xs font-bold shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#D97706] animate-pulse" />
               <span>{t('hero_badge')}</span>
             </div>
 
             {/* ── Editorial headline ── */}
             <h1 className="font-editorial text-[2.6rem] sm:text-6xl lg:text-[4.25rem] text-[#0B132B] leading-[1.03] tracking-tight">
               {t('hero_title_1')}{' '}
-              <span className="text-[#F59E0B]">{t('hero_title_2')}</span>{' '}
+              <span className="text-[#D97706]">{t('hero_title_2')}</span>{' '}
               {t('hero_title_3')}
             </h1>
 
@@ -188,9 +188,9 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="bg-white p-4 rounded-3xl border border-stone-200/90 shadow-xl shadow-stone-200/40 space-y-3"
             >
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                <div className="bg-stone-50 hover:bg-white p-2.5 rounded-2xl border border-stone-200 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                <div className="bg-stone-50 hover:bg-white p-2.5 rounded-2xl border border-stone-200 focus-within:border-[#D97706] focus-within:bg-white transition-all">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-[#F59E0B]" />
+                    <MapPin className="w-3 h-3 text-[#D97706]" />
                     {t('hero_field_neighborhood')}
                   </label>
                   <input
@@ -202,7 +202,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   />
                 </div>
 
-                <div className="bg-stone-50 hover:bg-white p-2.5 rounded-2xl border border-stone-200 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                <div className="bg-stone-50 hover:bg-white p-2.5 rounded-2xl border border-stone-200 focus-within:border-[#D97706] focus-within:bg-white transition-all">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
                     <Home className="w-3 h-3 text-blue-500" />
                     {t('hero_field_type')}
@@ -220,7 +220,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   </select>
                 </div>
 
-                <div className="bg-stone-50 hover:bg-white p-2.5 rounded-2xl border border-stone-200 focus-within:border-[#F59E0B] focus-within:bg-white transition-all">
+                <div className="bg-stone-50 hover:bg-white p-2.5 rounded-2xl border border-stone-200 focus-within:border-[#D97706] focus-within:bg-white transition-all">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
                     <Coins className="w-3 h-3 text-emerald-500" />
                     {t('hero_field_max_budget')}
@@ -239,7 +239,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 type="submit"
                 className="w-full py-3.5 bg-[#0B132B] hover:bg-[#1a2744] text-white font-bold text-sm rounded-2xl shadow-lg shadow-slate-900/20 transition-all active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2"
               >
-                <Search className="w-4 h-4 text-[#F59E0B]" />
+                <Search className="w-4 h-4 text-[#D97706]" />
                 <span>{t('hero_search_cta')}</span>
               </button>
             </form>
@@ -270,7 +270,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <motion.div
                 animate={{ scale: [1, 1.06, 1], opacity: [0.3, 0.55, 0.3] }}
                 transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -inset-4 bg-gradient-to-tr from-[#F59E0B]/30 via-amber-300/20 to-blue-600/20 rounded-3xl blur-2xl -z-10"
+                className="absolute -inset-4 bg-gradient-to-tr from-[#D97706]/30 via-amber-300/20 to-blue-600/20 rounded-3xl blur-2xl -z-10"
               />
 
               <motion.div
@@ -283,7 +283,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 }}
                 className="absolute -top-3 -right-2 z-20 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-amber-200/80 shadow-lg flex items-center gap-1.5 text-xs font-black text-[#0B132B]"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
                 <span>Étudiante 2026</span>
               </motion.div>
 
@@ -339,12 +339,12 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-bold uppercase tracking-wider mb-3 border border-amber-100">
-              <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
               <span>{t('popular_badge')}</span>
             </div>
             <h2 className="font-editorial text-3xl sm:text-5xl text-[#0B132B] leading-tight">
               {t('popular_title')}{' '}
-              <span className="text-[#F59E0B]">{t('popular_title_highlight')}</span>
+              <span className="text-[#D97706]">{t('popular_title_highlight')}</span>
             </h2>
           </div>
           <button
@@ -376,12 +376,12 @@ export const HomePage: React.FC<HomePageProps> = ({
       >
         {/* Section header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-24 space-y-3">
-          <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#F59E0B] bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
+          <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#D97706] bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
             {t('how_section_badge')}
           </span>
           <h2 className="font-editorial text-3xl sm:text-5xl text-[#0B132B] leading-tight">
             {t('how_section_title')}{' '}
-            <span className="text-[#F59E0B]">{t('how_section_title_highlight')}</span>
+            <span className="text-[#D97706]">{t('how_section_title_highlight')}</span>
           </h2>
           <p className="text-sm text-slate-500 leading-relaxed">{t('how_section_desc')}</p>
         </div>
@@ -484,13 +484,13 @@ export const HomePage: React.FC<HomePageProps> = ({
       >
         {/* Header — left-aligned editorial */}
         <div className="space-y-3">
-          <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#F59E0B] bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
+          <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#D97706] bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
             {t('trust_badge')}
           </span>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <h2 className="font-editorial text-3xl sm:text-5xl text-[#0B132B] leading-tight max-w-xl">
               {t('trust_title')}{' '}
-              <span className="text-[#F59E0B]">{t('trust_title_highlight')}</span>
+              <span className="text-[#D97706]">{t('trust_title_highlight')}</span>
             </h2>
             <p className="text-sm text-slate-400 max-w-xs leading-relaxed shrink-0">
               Waaloge simplifie la recherche et remet l'humain au centre.
@@ -524,7 +524,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             {/* Content */}
             <div className="relative z-20 space-y-4">
               <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center">
-                <ShieldCheck className="w-6 h-6 text-[#F59E0B]" />
+                <ShieldCheck className="w-6 h-6 text-[#D97706]" />
               </div>
               <h3 className="font-editorial text-2xl sm:text-3xl text-white leading-snug">
                 {t('trust_1_title')}
@@ -613,7 +613,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
             <h2 className="font-editorial text-3xl sm:text-4xl text-[#0B132B] leading-tight">
               {t('guides_title')}{' '}
-              <span className="text-[#F59E0B]">{t('guides_title_highlight')}</span>
+              <span className="text-[#D97706]">{t('guides_title_highlight')}</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mt-2">{t('guides_subtitle')}</p>
           </div>
@@ -642,12 +642,12 @@ export const HomePage: React.FC<HomePageProps> = ({
         className="max-w-7xl mx-auto px-4 sm:px-6 space-y-8"
       >
         <div className="text-center max-w-xl mx-auto space-y-3">
-          <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#F59E0B] bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
+          <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#D97706] bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
             {t('faq_badge')}
           </span>
           <h2 className="font-editorial text-3xl sm:text-4xl text-[#0B132B]">
             {t('faq_title')}{' '}
-            <span className="text-[#F59E0B]">{t('faq_title_highlight')}</span>
+            <span className="text-[#D97706]">{t('faq_title_highlight')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500">{t('faq_subtitle')}</p>
         </div>
@@ -665,15 +665,15 @@ export const HomePage: React.FC<HomePageProps> = ({
         className="max-w-7xl mx-auto px-4 sm:px-6"
       >
         <div className="relative overflow-hidden rounded-[2rem] bg-[#0B132B] text-white p-8 sm:p-14 border border-slate-800 shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#F59E0B]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#D97706]/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             <div className="lg:col-span-8 space-y-5">
-              <span className="text-xs font-bold tracking-widest uppercase text-[#F59E0B]">Waaloge 2026</span>
+              <span className="text-xs font-bold tracking-widest uppercase text-[#D97706]">Waaloge 2026</span>
               <h2 className="font-editorial text-4xl sm:text-6xl text-white leading-[1.03]">
                 {t('cta_title_1')}{' '}
-                <span className="text-[#F59E0B]">{t('cta_title_2')}</span>{' '}
+                <span className="text-[#D97706]">{t('cta_title_2')}</span>{' '}
                 {t('cta_title_3')}
               </h2>
               <p className="text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">{t('cta_subtitle')}</p>
@@ -682,7 +682,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigate('explore')}
-                  className="px-7 py-3.5 bg-[#F59E0B] hover:bg-[#D97706] text-[#0B132B] font-black text-sm rounded-xl shadow-lg transition-all active:scale-[0.98] cursor-pointer flex items-center gap-2"
+                  className="px-7 py-3.5 bg-[#D97706] hover:bg-[#D97706] text-[#0B132B] font-black text-sm rounded-xl shadow-lg transition-all active:scale-[0.98] cursor-pointer flex items-center gap-2"
                 >
                   <span>{t('cta_explore')}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -699,7 +699,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <div className="lg:col-span-4 flex justify-center lg:justify-end">
               <div className="relative">
-                <div className="w-44 h-44 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-[#F59E0B] shadow-2xl bg-slate-800">
+                <div className="w-44 h-44 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-[#D97706] shadow-2xl bg-slate-800">
                   <img
                     src={CTA_STUDENT_IMG}
                     alt="Étudiante Waaloge"

@@ -47,7 +47,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
           className="text-center space-y-4 max-w-2xl mx-auto"
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider border border-blue-100">
-            <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
             <span>{language === 'fr' ? 'Notre Vision 2026' : 'Our 2026 Vision'}</span>
           </div>
           
@@ -55,7 +55,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             {language === 'fr' 
               ? 'Simplifier la vie étudiante, ' 
               : 'Empowering student journeys, '}
-            <span className="text-[#F59E0B]">
+            <span className="text-[#D97706]">
               {language === 'fr' ? 'une chambre à la fois.' : 'one room at a time.'}
             </span>
           </h1>
@@ -80,7 +80,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             <span className="text-xs text-slate-500 font-medium mt-1 block">Étudiants accompagnés</span>
           </motion.div>
           <motion.div variants={itemVariants} className="bg-white p-6 rounded-2xl border border-stone-200 text-center shadow-xs">
-            <span className="font-editorial text-3xl sm:text-4xl text-[#F59E0B] block">100%</span>
+            <span className="font-editorial text-3xl sm:text-4xl text-[#D97706] block">100%</span>
             <span className="text-xs text-slate-500 font-medium mt-1 block">Logements audités</span>
           </motion.div>
           <motion.div variants={itemVariants} className="bg-white p-6 rounded-2xl border border-stone-200 text-center shadow-xs">
@@ -106,7 +106,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             whileHover={{ y: -4 }}
             className="bg-white p-7 rounded-3xl border border-stone-200 shadow-xs hover:shadow-md transition-all space-y-3"
           >
-            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-[#F59E0B] flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-[#D97706] flex items-center justify-center">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <h3 className="font-editorial text-2xl text-[#0B132B]">
@@ -168,7 +168,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-xs font-bold text-[#F59E0B] uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 text-xs font-bold text-[#D97706] uppercase tracking-wider">
                 <FileCheck className="w-4 h-4" />
                 <span>Programme Propriétaire Certifié</span>
               </div>

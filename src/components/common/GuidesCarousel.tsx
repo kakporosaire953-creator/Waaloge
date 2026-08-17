@@ -75,7 +75,7 @@ export const GuidesCarousel: React.FC<GuidesCarouselProps> = ({ onNavigate }) =>
       {/* Navigation Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
-          <BookOpen className="w-4 h-4 text-[#F59E0B]" />
+          <BookOpen className="w-4 h-4 text-[#D97706]" />
           <span>{guides.length} guides pratiques pour la vie étudiante</span>
         </div>
 
@@ -143,7 +143,7 @@ export const GuidesCarousel: React.FC<GuidesCarouselProps> = ({ onNavigate }) =>
                 </h3>
               </div>
 
-              <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs font-bold text-[#F59E0B]">
+              <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs font-bold text-[#D97706]">
                 <span>{t('guide_read_more')}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>

@@ -26,18 +26,18 @@ export const BudgetSimulator: React.FC<BudgetSimulatorProps> = ({ onSearchBudget
   return (
     <div className="bg-gradient-to-br from-slate-900 to-[#0B132B] text-white rounded-3xl p-6 sm:p-10 border border-slate-800 shadow-2xl overflow-hidden relative">
       {/* Decorative ambient glow */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#F59E0B]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#D97706]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
       <div className="relative z-10 max-w-2xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-[#F59E0B] text-xs font-bold uppercase tracking-wider mb-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-[#D97706] text-xs font-bold uppercase tracking-wider mb-3">
           <Calculator className="w-3.5 h-3.5" />
           <span>{t('calc_badge')}</span>
         </div>
         
         <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-white">
-          {t('calc_title')} <span className="text-[#F59E0B]">{t('calc_title_highlight')}</span>
+          {t('calc_title')} <span className="text-[#D97706]">{t('calc_title_highlight')}</span>
         </h2>
         
         <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
@@ -54,10 +54,10 @@ export const BudgetSimulator: React.FC<BudgetSimulatorProps> = ({ onSearchBudget
           <div className="space-y-2 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-300 font-medium flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D97706]" />
                 {t('calc_rent_label')}
               </span>
-              <span className="text-sm font-black text-[#F59E0B]">
+              <span className="text-sm font-black text-[#D97706]">
                 {rent.toLocaleString('fr-FR')} FCFA
               </span>
             </div>
@@ -68,7 +68,7 @@ export const BudgetSimulator: React.FC<BudgetSimulatorProps> = ({ onSearchBudget
               step="5000"
               value={rent}
               onChange={(e) => setRent(Number(e.target.value))}
-              className="w-full accent-[#F59E0B] cursor-pointer h-2 bg-slate-700 rounded-lg appearance-none"
+              className="w-full accent-[#D97706] cursor-pointer h-2 bg-slate-700 rounded-lg appearance-none"
             />
           </div>
 
@@ -149,12 +149,12 @@ export const BudgetSimulator: React.FC<BudgetSimulatorProps> = ({ onSearchBudget
             </span>
             
             <div className="text-3xl sm:text-4xl font-black text-white mt-1">
-              {total.toLocaleString('fr-FR')} <span className="text-[#F59E0B] text-xl">FCFA</span>
+              {total.toLocaleString('fr-FR')} <span className="text-[#D97706] text-xl">FCFA</span>
             </div>
 
             {/* Distribution Bar */}
             <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden flex mt-4 border border-white/10">
-              <div style={{ width: `${rentPercent}%` }} className="bg-[#F59E0B] transition-all duration-300" title={`Loyer: ${rentPercent}%`} />
+              <div style={{ width: `${rentPercent}%` }} className="bg-[#D97706] transition-all duration-300" title={`Loyer: ${rentPercent}%`} />
               <div style={{ width: `${utilPercent}%` }} className="bg-blue-400 transition-all duration-300" title={`Charges: ${utilPercent}%`} />
               <div style={{ width: `${foodPercent}%` }} className="bg-emerald-400 transition-all duration-300" title={`Repas: ${foodPercent}%`} />
               <div style={{ width: `${transPercent}%` }} className="bg-purple-400 transition-all duration-300" title={`Transport: ${transPercent}%`} />
@@ -163,7 +163,7 @@ export const BudgetSimulator: React.FC<BudgetSimulatorProps> = ({ onSearchBudget
             {/* Legend Pills */}
             <div className="grid grid-cols-2 gap-2 mt-4 text-[11px] text-slate-300">
               <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
+                <span className="w-2 h-2 rounded-full bg-[#D97706]" />
                 <span>Loyer ({rentPercent}%)</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -182,8 +182,8 @@ export const BudgetSimulator: React.FC<BudgetSimulatorProps> = ({ onSearchBudget
           </div>
 
           {/* Student Pro Tip */}
-          <div className="bg-[#F59E0B]/15 border border-[#F59E0B]/30 p-3.5 rounded-2xl text-xs space-y-1">
-            <span className="font-bold text-[#F59E0B] flex items-center gap-1">
+          <div className="bg-[#D97706]/15 border border-[#D97706]/30 p-3.5 rounded-2xl text-xs space-y-1">
+            <span className="font-bold text-[#D97706] flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5" />
               {t('calc_tip_title')}
             </span>
@@ -196,7 +196,7 @@ export const BudgetSimulator: React.FC<BudgetSimulatorProps> = ({ onSearchBudget
           <button
             type="button"
             onClick={() => onSearchBudget(rent)}
-            className="w-full py-3 px-4 bg-[#F59E0B] hover:bg-[#D97706] text-[#0B132B] font-bold text-xs sm:text-sm rounded-xl shadow-lg transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 bg-[#D97706] hover:bg-[#D97706] text-[#0B132B] font-bold text-xs sm:text-sm rounded-xl shadow-lg transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2"
           >
             <span>{t('calc_cta')}</span>
             <ArrowRight className="w-4 h-4" />

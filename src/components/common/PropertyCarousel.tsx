@@ -132,13 +132,13 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
                 <span className={`px-3 py-1 rounded-full text-xs font-bold shadow-md ${
                   currentProperty.availability === 'disponible'
                     ? 'bg-emerald-500 text-white'
-                    : 'bg-[#F59E0B] text-white'
+                    : 'bg-[#D97706] text-white'
                 }`}>
                   {currentProperty.availability === 'disponible' ? t('popular_available') : t('popular_soon')}
                 </span>
 
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-medium border border-white/20">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#D97706]" />
                   <span>{language === 'fr' ? '100% Vérifié' : '100% Verified'}</span>
                 </span>
               </div>
@@ -159,7 +159,7 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
               {/* Distance Bottom Left Badge */}
               <div className="absolute bottom-4 left-4">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/95 backdrop-blur-md text-xs font-bold text-slate-900 shadow-md">
-                  <MapPin className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#D97706]" />
                   <span>{currentProperty.distanceToCampus}</span>
                 </span>
               </div>
@@ -176,7 +176,7 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
                   </span>
                   
                   <div className="flex items-center gap-1 text-xs font-bold text-slate-800">
-                    <span className="text-[#F59E0B]">★</span>
+                    <span className="text-[#D97706]">★</span>
                     <span>{currentProperty.rating}</span>
                     <span className="text-slate-400 font-normal">({currentProperty.reviewsCount})</span>
                   </div>
@@ -204,7 +204,7 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
                 {/* Amenities Badges Grid */}
                 <div className="grid grid-cols-2 gap-2 pt-2">
                   <div className="flex items-center gap-2 text-xs text-slate-700 bg-stone-50 p-2 rounded-xl border border-stone-100">
-                    <BedDouble className="w-4 h-4 text-[#F59E0B]" />
+                    <BedDouble className="w-4 h-4 text-[#D97706]" />
                     <span className="truncate">{currentProperty.surface} m² • {currentProperty.type}</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-slate-700 bg-stone-50 p-2 rounded-xl border border-stone-100">
@@ -250,7 +250,7 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
                     className="px-5 py-2.5 bg-[#0B132B] hover:bg-[#1E293B] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all active:scale-98 cursor-pointer flex items-center gap-1.5"
                   >
                     <span>{t('popular_book_visit')}</span>
-                    <ArrowRight className="w-4 h-4 text-[#F59E0B]" />
+                    <ArrowRight className="w-4 h-4 text-[#D97706]" />
                   </button>
                 </div>
               </div>
@@ -271,7 +271,7 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
             className="p-2 rounded-xl bg-white border border-stone-200 text-slate-600 hover:text-slate-900 hover:bg-stone-50 transition-colors shadow-2xs cursor-pointer"
             title={isAutoPlay ? t('carousel_pause') : t('carousel_auto_play')}
           >
-            {isAutoPlay ? <Pause className="w-3.5 h-3.5 text-blue-600" /> : <Play className="w-3.5 h-3.5 text-[#F59E0B]" />}
+            {isAutoPlay ? <Pause className="w-3.5 h-3.5 text-blue-600" /> : <Play className="w-3.5 h-3.5 text-[#D97706]" />}
           </button>
 
           <span className="text-xs font-semibold text-slate-500">
@@ -291,7 +291,7 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
               }}
               className={`transition-all duration-300 rounded-full cursor-pointer ${
                 idx === currentIndex
-                  ? 'w-8 h-2.5 bg-[#F59E0B]'
+                  ? 'w-8 h-2.5 bg-[#D97706]'
                   : 'w-2.5 h-2.5 bg-stone-300 hover:bg-stone-400'
               }`}
               aria-label={`Aller au slide ${idx + 1}`}

@@ -68,7 +68,7 @@ export const TestimonialCarousel: React.FC = () => {
         {/* Rating stars */}
         <div className="flex items-center justify-center gap-1">
           {[...Array(current.rating)].map((_, i) => (
-            <Star key={i} className="w-5 h-5 fill-[#F59E0B] text-[#F59E0B]" />
+            <Star key={i} className="w-5 h-5 fill-[#D97706] text-[#D97706]" />
           ))}
         </div>
 
@@ -91,7 +91,7 @@ export const TestimonialCarousel: React.FC = () => {
               <img
                 src={current.avatar}
                 alt={t(current.authorKey)}
-                className="w-12 h-12 rounded-full object-cover ring-2 ring-[#F59E0B]/50 shadow-sm"
+                className="w-12 h-12 rounded-full object-cover ring-2 ring-[#D97706]/50 shadow-sm"
                 referrerPolicy="no-referrer"
               />
               <div>
@@ -125,7 +125,7 @@ export const TestimonialCarousel: React.FC = () => {
                 type="button"
                 onClick={() => setIndex(i)}
                 className={`transition-all duration-300 rounded-full cursor-pointer ${
-                  i === index ? 'w-6 h-2 bg-[#F59E0B]' : 'w-2 h-2 bg-stone-300'
+                  i === index ? 'w-6 h-2 bg-[#D97706]' : 'w-2 h-2 bg-stone-300'
                 }`}
                 aria-label={`Avis ${i + 1}`}
               />
