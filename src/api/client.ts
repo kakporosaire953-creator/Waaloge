@@ -14,27 +14,24 @@ const STORAGE_KEYS = {
   USE_CUSTOM_API: 'waaloge_use_custom_api'
 };
 
-// Seed LocalStorage / memory if not present
+// Seed LocalStorage with app data (properties, neighborhoods) but NOT with a pre-logged user.
+// Users must register or login manually — no ghost account on first visit.
 function initializeStore() {
   try {
     if (!safeStorage.getItem(STORAGE_KEYS.PROPERTIES)) {
       safeStorage.setItem(STORAGE_KEYS.PROPERTIES, JSON.stringify(INITIAL_PROPERTIES));
     }
-    if (!safeStorage.getItem(STORAGE_KEYS.BOOKINGS)) {
-      safeStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(INITIAL_BOOKINGS));
-    }
-    if (!safeStorage.getItem(STORAGE_KEYS.NOTIFICATIONS)) {
-      safeStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(INITIAL_NOTIFICATIONS));
-    }
-    if (!safeStorage.getItem(STORAGE_KEYS.FAVORITES)) {
-      safeStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(INITIAL_FAVORITE_IDS));
-    }
-    if (!safeStorage.getItem(STORAGE_KEYS.USER)) {
-      safeStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(INITIAL_USER));
-      safeStorage.setItem(STORAGE_KEYS.TOKEN, 'sanctum_token_waaloge_mock_live');
+    // Clear any legacy auto-created mock session so no account appears pre-connected
+    const legacyToken = safeStorage.getItem(STORAGE_KEYS.TOKEN);
+    if (legacyToken === 'sanctum_token_waaloge_mock_live') {
+      safeStorage.removeItem(STORAGE_KEYS.TOKEN);
+      safeStorage.removeItem(STORAGE_KEYS.USER);
+      safeStorage.removeItem(STORAGE_KEYS.BOOKINGS);
+      safeStorage.removeItem(STORAGE_KEYS.NOTIFICATIONS);
+      safeStorage.removeItem(STORAGE_KEYS.FAVORITES);
     }
   } catch (e) {
-    console.warn('Waaloge safeStorage initial seed notice:', e);
+    console.warn('Waaloge safeStorage init notice:', e);
   }
 }
 
@@ -201,7 +198,7 @@ export const apiClient = {
       const list: Booking[] = JSON.parse(str);
       return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     } catch {
-      return INITIAL_BOOKINGS;
+      return [];
     }
   },
 
@@ -297,7 +294,7 @@ export const apiClient = {
       const list: NotificationItem[] = JSON.parse(str);
       return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     } catch {
-      return INITIAL_NOTIFICATIONS;
+      return [];
     }
   },
 
