@@ -64,10 +64,10 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
     },
     {
       step: '03',
-      title: isEn ? 'Book a free visit' : 'Je réserve ma visite sans frais',
+      title: isEn ? 'Book your visit' : 'Je réserve ma visite',
       desc: isEn 
-        ? 'Select your preferred time slot from the landlord availability calendar. Visits are 100% free and monitored. Zero illegal advance payment required.'
-        : 'Choisis le jour et le créneau horaire qui te conviennent parmi les disponibilités du propriétaire. La visite est 100% gratuite et encadrée. Aucun paiement préalable n’est requis.',
+        ? 'Select your preferred time slot from the landlord availability calendar. Choose the date and time that suits you best — a small booking fee applies to confirm your visit slot.'
+        : 'Choisis le jour et le créneau horaire qui te conviennent parmi les disponibilités du propriétaire. Une petite contribution de réservation est requise pour confirmer ton créneau de visite.',
       icon: CalendarCheck2
     },
     {
@@ -81,12 +81,12 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
   ];
 
   const safetyRules = isEn ? [
-    "NEVER pay money to 'reserve' a visit or key before physically visiting the property.",
+    "NEVER pay cash or send unofficial off-platform money to street brokers before a visit.",
     "Always insist on a written lease agreement and a signed receipt when paying any deposit.",
     "Inspect water taps (pressure) and electricity meters on-site before signing.",
     "If you suspect fraud or suspicious behavior, report it immediately to the Waaloge team."
   ] : [
-    "Ne versez JAMAIS d'argent pour 'réserver' une visite ou obtenir une clé avant d'avoir visité physiquement le logement.",
+    "Ne versez JAMAIS d'argent liquide ou hors plateforme à des démarcheurs de rue pour visiter un logement.",
     "Exigez toujours un contrat de bail écrit et un reçu signé lors du versement de la caution.",
     "Vérifiez sur place le fonctionnement des robinets (pression d'eau) et le compteur électrique.",
     "En cas de doute ou de comportement inhabituel d'un interlocuteur, signalez-le immédiatement à l'équipe Waaloge."
