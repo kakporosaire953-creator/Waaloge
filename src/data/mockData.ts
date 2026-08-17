@@ -15,7 +15,7 @@ export const INITIAL_USER: User = {
   createdAt: '2026-06-15'
 };
 
-export const INITIAL_FAVORITE_IDS: string[] = ['prop_photo_01'];
+export const INITIAL_FAVORITE_IDS: string[] = [];
 
 export const INITIAL_PROPERTIES: Property[] = [
   // 1. Studio meublé moderne (Exact match with photo)

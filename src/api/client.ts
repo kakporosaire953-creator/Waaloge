@@ -14,21 +14,26 @@ const STORAGE_KEYS = {
   USE_CUSTOM_API: 'waaloge_use_custom_api'
 };
 
-// Seed LocalStorage with app data (properties, neighborhoods) but NOT with a pre-logged user.
-// Users must register or login manually — no ghost account on first visit.
+// ─── Cache version: bump this string to force-clear all stale sessions ───────
+const CACHE_VERSION = 'waaloge_v2';
+const CACHE_VERSION_KEY = 'waaloge_cache_ver';
+
+// Clears stale mock sessions and user data on first load of a new version.
+// Guarantees no ghost account or leftover fake favorites on first visit.
 function initializeStore() {
   try {
-    if (!safeStorage.getItem(STORAGE_KEYS.PROPERTIES)) {
-      safeStorage.setItem(STORAGE_KEYS.PROPERTIES, JSON.stringify(INITIAL_PROPERTIES));
-    }
-    // Clear any legacy auto-created mock session so no account appears pre-connected
-    const legacyToken = safeStorage.getItem(STORAGE_KEYS.TOKEN);
-    if (legacyToken === 'sanctum_token_waaloge_mock_live') {
+    const storedVer = safeStorage.getItem(CACHE_VERSION_KEY);
+    if (storedVer !== CACHE_VERSION) {
+      // New deployment or fresh browser — wipe all session data
       safeStorage.removeItem(STORAGE_KEYS.TOKEN);
       safeStorage.removeItem(STORAGE_KEYS.USER);
       safeStorage.removeItem(STORAGE_KEYS.BOOKINGS);
       safeStorage.removeItem(STORAGE_KEYS.NOTIFICATIONS);
       safeStorage.removeItem(STORAGE_KEYS.FAVORITES);
+      safeStorage.setItem(CACHE_VERSION_KEY, CACHE_VERSION);
+    }
+    if (!safeStorage.getItem(STORAGE_KEYS.PROPERTIES)) {
+      safeStorage.setItem(STORAGE_KEYS.PROPERTIES, JSON.stringify(INITIAL_PROPERTIES));
     }
   } catch (e) {
     console.warn('Waaloge safeStorage init notice:', e);

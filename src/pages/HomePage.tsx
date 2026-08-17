@@ -156,7 +156,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative pt-6 sm:pt-12 pb-6 max-w-7xl mx-auto px-4 sm:px-6"
+        className="relative pt-4 sm:pt-12 pb-6 max-w-7xl mx-auto px-4 sm:px-6"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
 
@@ -183,7 +183,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] as const }}
-              className="font-editorial text-[2.75rem] sm:text-6xl lg:text-[4.35rem] text-[#0B132B] leading-[1.02] tracking-tight"
+              className="font-editorial text-[2.15rem] xs:text-[2.4rem] sm:text-6xl lg:text-[4.35rem] text-[#0B132B] leading-[1.06] sm:leading-[1.02] tracking-tight"
             >
               {t('hero_title_1')}{' '}
               <span className="text-[#D97706]">{t('hero_title_2')}</span>{' '}
@@ -195,7 +195,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="text-sm sm:text-base text-slate-500/90 leading-relaxed max-w-xl font-normal"
+              className="text-xs sm:text-base text-slate-500/90 leading-relaxed max-w-xl font-normal"
             >
               {t('hero_subtitle')}
             </motion.p>
@@ -272,13 +272,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               transition={{ duration: 0.6, delay: 0.5 }}
               className="flex items-center gap-3 pt-1"
             >
-              <div className="flex -space-x-2">
+              <div className="flex -space-x-2 shrink-0">
                 {[
                   'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=120&q=80',
                   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
                   'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=120&q=80',
                 ].map((src, i) => (
-                  <img key={i} className="w-8 h-8 rounded-full ring-2 ring-white object-cover" src={src} alt="" referrerPolicy="no-referrer" />
+                  <img key={i} className="w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-white object-cover" src={src} alt="" referrerPolicy="no-referrer" />
                 ))}
               </div>
               <p className="text-xs text-slate-500 font-medium">{t('hero_social_proof')}</p>
@@ -290,23 +290,24 @@ export const HomePage: React.FC<HomePageProps> = ({
             initial={{ opacity: 0, scale: 1.03 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-5 xl:col-span-5 relative"
+            className="lg:col-span-5 xl:col-span-5 relative mt-6 lg:mt-0"
           >
-            <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+            {/* Wrapper: on mobile, extra padding-bottom to accommodate floating card */}
+            <div className="relative mx-auto w-full max-w-sm sm:max-w-md lg:max-w-none pb-10 sm:pb-8 lg:pb-0">
               
               {/* Floating Badge "Étudiante 2026" */}
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
-                className="absolute -top-3 right-4 z-20 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full border border-amber-200/80 shadow-md flex items-center gap-2 text-xs font-bold text-[#0B132B]"
+                className="absolute -top-3 right-3 sm:right-4 z-20 bg-white/95 backdrop-blur-md px-3.5 sm:px-4 py-1.5 rounded-full border border-amber-200/80 shadow-md flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold text-[#0B132B]"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
                 <span>Étudiante 2026</span>
               </motion.div>
 
               {/* Asymmetric Photography Container */}
-              <div className="relative aspect-[4/5] rounded-[2.5rem] rounded-tr-[5rem] rounded-bl-[1.5rem] overflow-hidden shadow-2xl border-4 border-white bg-slate-900 group">
+              <div className="relative aspect-[4/5] rounded-[2rem] sm:rounded-[2.5rem] rounded-tr-[3.5rem] sm:rounded-tr-[5rem] rounded-bl-[1.25rem] sm:rounded-bl-[1.5rem] overflow-hidden shadow-2xl border-4 border-white bg-slate-900 group">
                 <img
                   src={HERO_STUDENT_IMG}
                   alt="Étudiante Waaloge"
@@ -317,22 +318,22 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/80 via-transparent to-transparent pointer-events-none" />
               </div>
 
-              {/* Floating Stats Card overlapping bottom */}
+              {/* Floating Stats Card — centered on mobile, left-overlap on desktop */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.55, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
-                className="absolute -bottom-5 -left-3 sm:-left-6 z-20 bg-white/98 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl border border-stone-200/90 shadow-xl flex items-center gap-3.5 max-w-[280px] sm:max-w-xs"
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:-left-6 sm:-bottom-4 z-20 bg-white/98 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-stone-200/90 shadow-xl flex items-center gap-2.5 sm:gap-3.5 w-[88%] sm:w-auto sm:max-w-xs"
               >
-                <div className="w-10 h-10 rounded-xl bg-amber-100/80 flex items-center justify-center text-[#D97706] shrink-0">
-                  <CalendarCheck2 className="w-5 h-5" />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100/80 flex items-center justify-center text-[#D97706] shrink-0">
+                  <CalendarCheck2 className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <span className="text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase tracking-wider block truncate">{t('hero_badge_stat_title')}</span>
-                  <span className="text-sm sm:text-base font-black text-slate-900">{t('hero_badge_stat_val')}</span>
+                  <span className="text-[9px] sm:text-[11px] text-slate-500 font-bold uppercase tracking-wider block truncate">{t('hero_badge_stat_title')}</span>
+                  <span className="text-xs sm:text-base font-black text-slate-900">{t('hero_badge_stat_val')}</span>
                 </div>
-                <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold border border-emerald-200/80 flex items-center gap-1 shrink-0">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="px-2 sm:px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[10px] sm:text-[11px] font-bold border border-emerald-200/80 flex items-center gap-1 shrink-0">
+                  <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600" />
                   <span>100% Gratuit</span>
                 </span>
               </motion.div>
