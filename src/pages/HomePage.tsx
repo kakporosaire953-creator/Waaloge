@@ -10,6 +10,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { PropertyCarousel } from '../components/common/PropertyCarousel';
 import { NeighborhoodExplorer } from '../components/common/NeighborhoodExplorer';
 import { FaqAccordion } from '../components/common/FaqAccordion';
+import { GuidesCarousel } from '../components/common/GuidesCarousel';
 import {
   Search,
   MapPin,
@@ -26,18 +27,16 @@ import {
   ChevronRight,
 } from 'lucide-react';
 
-import ctaStudentImg from '../assets/images/cta_student_books_1786912237396.jpg';
-import heroStudentImg from '../assets/images/hero_student_classroom_1786912397937.jpg';
+/* ── Authentic African Student Imagery ── */
+const HERO_STUDENT_IMG = 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1200&q=80';
+const CTA_STUDENT_IMG = 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80';
 
-const HERO_STUDENT_IMG = heroStudentImg;
-const CTA_STUDENT_IMG = ctaStudentImg;
-
-/* ── Zigzag step images ── */
+/* ── Zigzag step images (100% Authentic African Students) ── */
 const STEP_IMGS = [
-  'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=700&q=80',
-  'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=700&q=80',
-  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=700&q=80',
+  'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=700&q=80',
   'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80',
+  'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=700&q=80',
+  'https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=700&q=80',
 ];
 
 /* ── Step accent colors — full class strings for Tailwind scanner ── */
@@ -597,7 +596,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </motion.section>
 
       {/* ════════════════════════════════════════════════════ */}
-      {/* 6. STUDENT LIFE GUIDES                              */}
+      {/* 6. CONSEILS & BONS PLANS (GUIDES CAROUSEL)          */}
       {/* ════════════════════════════════════════════════════ */}
       <motion.section
         variants={sectionVariants}
@@ -628,43 +627,8 @@ export const HomePage: React.FC<HomePageProps> = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {guideData.map((guide, i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              onClick={() => onNavigate('about')}
-              className="bg-white rounded-[1.5rem] border border-stone-200 overflow-hidden shadow-sm hover:shadow-xl transition-all group cursor-pointer flex flex-col"
-            >
-              <div className="aspect-[16/10] overflow-hidden bg-slate-900">
-                <img
-                  src={guide.img}
-                  alt={guide.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-[11px] font-bold">
-                    <span className={`${guide.color} px-2 py-0.5 rounded-md`}>{guide.category}</span>
-                    <span className="text-slate-400 flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {guide.time}
-                    </span>
-                  </div>
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
-                    {guide.title}
-                  </h3>
-                </div>
-                <span className="text-xs font-bold text-[#F59E0B] flex items-center gap-1 pt-3">
-                  {t('guide_read_more')} <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Interactive Guides Carousel */}
+        <GuidesCarousel onNavigate={onNavigate} />
       </motion.section>
 
       {/* ════════════════════════════════════════════════════ */}

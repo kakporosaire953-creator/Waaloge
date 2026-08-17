@@ -102,7 +102,7 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
               </Badge>
             </div>
 
-            <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
+            <h1 className="font-editorial text-2xl sm:text-4xl text-[#0B132B] leading-tight">
               {property.title}
             </h1>
 

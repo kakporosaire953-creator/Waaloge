@@ -270,13 +270,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({
           </div>
 
           <div className="mb-6">
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-              {mode === 'login' ? 'Bon retour sur Waaloge' : 'Rejoindre la communauté étudiante'}
+            <h3 className="font-editorial text-2xl sm:text-3xl text-[#0B132B] tracking-tight">
+              {mode === 'login' ? 'Bon retour sur Waaloge' : 'Rejoindre la communauté'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
               {mode === 'login'
                 ? 'Saisissez vos identifiants pour accéder à vos favoris et vos visites planifiées.'
-                : 'Créez votre profil étudiant en 30 secondes pour bloquer votre logement.'}
+                : 'Créez votre profil étudiant en 30 secondes pour réserver votre logement.'}
             </p>
           </div>
 

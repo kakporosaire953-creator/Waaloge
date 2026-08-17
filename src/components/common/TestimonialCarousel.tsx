@@ -42,7 +42,7 @@ export const TestimonialCarousel: React.FC = () => {
       authorKey: 'testimonial_3_author',
       studyKey: 'testimonial_3_study',
       rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
+      avatar: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=150&q=80',
       city: 'Cotonou'
     }
   ];

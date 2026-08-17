@@ -9,7 +9,7 @@ export const INITIAL_USER: User = {
   city: 'cotonou',
   university: 'Université d’Abomey-Calavi (UAC) / EPAC',
   fieldOfStudy: 'Génie Informatique & Télécoms',
-  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+  avatar: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=300&q=80',
   identityVerified: true,
   role: 'student',
   createdAt: '2026-06-15'
@@ -69,7 +69,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     landlord: {
       id: 'landlord_01',
       name: 'M. Ouedraogo',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+      avatar: 'https://images.unsplash.com/photo-1507152832244-10d45c7eda57?auto=format&fit=crop&w=200&q=80',
       verified: true,
       memberSince: '2024-02-15',
       responseRate: 98,
@@ -213,7 +213,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     landlord: {
       id: 'landlord_03',
       name: 'Dr. Compaoré',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
+      avatar: 'https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=200&q=80',
       verified: true,
       memberSince: '2023-11-20',
       responseRate: 96,
@@ -285,7 +285,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     landlord: {
       id: 'landlord_04',
       name: 'Mme Kaboré',
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
+      avatar: 'https://images.unsplash.com/photo-1534751516642-a171e2614908?auto=format&fit=crop&w=200&q=80',
       verified: true,
       memberSince: '2024-01-05',
       responseRate: 99,
