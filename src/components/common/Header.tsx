@@ -216,8 +216,8 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
           ) : (
-            /* EXACT BUTTONS FROM DESIGN WITH TRANSLATION */
-            <div className="flex items-center gap-1.5 sm:gap-2.5">
+            /* Auth buttons — hidden on mobile (accessible via hamburger menu) */
+            <div className="hidden sm:flex items-center gap-1.5 sm:gap-2.5">
               <button
                 type="button"
                 onClick={() => onNavigate('auth')}
@@ -236,14 +236,14 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           )}
 
-          {/* Mobile Menu Hamburger */}
+          {/* Mobile Menu Hamburger — always visible on mobile, prominent */}
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-1.5 sm:p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 cursor-pointer"
+            className="lg:hidden flex items-center justify-center w-10 h-10 text-slate-700 hover:text-slate-900 rounded-xl hover:bg-slate-100 cursor-pointer transition-colors shrink-0"
             aria-label="Menu"
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
@@ -251,58 +251,57 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* MOBILE NAVIGATION MENU */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-stone-200 bg-white px-4 py-4 space-y-2 animate-in slide-in-from-top-2 duration-150">
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onNavigate('home');
-            }}
-            className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer ${
-              currentTab === 'home' ? 'bg-amber-50 text-amber-900 font-bold' : 'text-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            {t('nav_home')}
-          </button>
+        <div className="lg:hidden border-t border-stone-200 bg-white px-4 py-4 space-y-1.5 animate-in slide-in-from-top-2 duration-150">
 
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onNavigate('explore');
-            }}
-            className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer ${
-              currentTab === 'explore' ? 'bg-amber-50 text-amber-900 font-bold' : 'text-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            {t('nav_explore')}
-          </button>
+          {/* Nav Links */}
+          {[
+            { key: 'home', label: t('nav_home') },
+            { key: 'explore', label: t('nav_explore') },
+            { key: 'how-it-works', label: t('nav_how_it_works') },
+            { key: 'about', label: t('nav_about') },
+          ].map((navItem) => (
+            <button
+              key={navItem.key}
+              type="button"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                onNavigate(navItem.key);
+              }}
+              className={`w-full text-left px-3.5 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-colors ${
+                currentTab === navItem.key
+                  ? 'bg-amber-50 text-amber-900 font-bold border border-amber-200/60'
+                  : 'text-slate-700 hover:bg-slate-50'
+              }`}
+            >
+              {navItem.label}
+            </button>
+          ))}
 
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onNavigate('how-it-works');
-            }}
-            className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer ${
-              currentTab === 'how-it-works' ? 'bg-amber-50 text-amber-900 font-bold' : 'text-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            {t('nav_how_it_works')}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onNavigate('about');
-            }}
-            className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer ${
-              currentTab === 'about' ? 'bg-amber-50 text-amber-900 font-bold' : 'text-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            {t('nav_about')}
-          </button>
+          {/* Auth section — only shown when NOT authenticated */}
+          {!isAuthenticated && (
+            <div className="pt-3 border-t border-stone-100 space-y-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onNavigate('auth');
+                }}
+                className="w-full py-3 text-sm font-semibold text-slate-700 hover:text-slate-950 border border-stone-200 rounded-xl hover:bg-stone-50 transition-colors cursor-pointer"
+              >
+                {t('nav_login')}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onNavigate('auth');
+                }}
+                className="w-full py-3 text-sm font-bold text-white bg-[#D97706] hover:bg-[#B45309] rounded-xl shadow-sm transition-all cursor-pointer"
+              >
+                {t('nav_register')}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </header>
