@@ -10,7 +10,6 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { PropertyCarousel } from '../components/common/PropertyCarousel';
 import { NeighborhoodExplorer } from '../components/common/NeighborhoodExplorer';
 import { FaqAccordion } from '../components/common/FaqAccordion';
-import { GuidesCarousel } from '../components/common/GuidesCarousel';
 import {
   Search,
   MapPin,
@@ -27,8 +26,10 @@ import {
   ChevronRight,
 } from 'lucide-react';
 
+import heroGraduatesImg from '../assets/images/hero_graduates.jpg';
+
 /* ── Authentic African Student Imagery ── */
-const HERO_STUDENT_IMG = 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1200&q=80';
+const HERO_STUDENT_IMG = heroGraduatesImg;
 const CTA_STUDENT_IMG = 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80';
 
 /* ── Zigzag step images (100% Authentic African Students) ── */
@@ -595,41 +596,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </motion.section>
 
-      {/* ════════════════════════════════════════════════════ */}
-      {/* 6. CONSEILS & BONS PLANS (GUIDES CAROUSEL)          */}
-      {/* ════════════════════════════════════════════════════ */}
-      <motion.section
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-60px' }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6"
-      >
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-3 border border-blue-100">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>{t('guides_badge')}</span>
-            </div>
-            <h2 className="font-editorial text-3xl sm:text-4xl text-[#0B132B] leading-tight">
-              {t('guides_title')}{' '}
-              <span className="text-[#D97706]">{t('guides_title_highlight')}</span>
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-400 mt-2">{t('guides_subtitle')}</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => onNavigate('about')}
-            className="text-xs sm:text-sm font-semibold text-slate-500 hover:text-[#0B132B] transition-colors cursor-pointer flex items-center gap-1 shrink-0"
-          >
-            <span>Voir tous les guides</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
 
-        {/* Interactive Guides Carousel */}
-        <GuidesCarousel onNavigate={onNavigate} />
-      </motion.section>
 
       {/* ════════════════════════════════════════════════════ */}
       {/* 7. FAQ ACCORDION                                    */}
