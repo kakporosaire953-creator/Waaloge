@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { CityId } from '../types';
@@ -24,6 +25,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
 import { BrandLogo } from '../components/common/BrandLogo';
+import authStudentsImg from '../assets/images/auth_students.jpg';
 
 interface AuthPageProps {
   initialMode?: 'login' | 'register';
@@ -44,56 +46,41 @@ export const AuthPage: React.FC<AuthPageProps> = ({
   const { t } = useLanguage();
 
   const [mode, setMode] = useState<'login' | 'register'>(initialMode);
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   // Form State - Defaulted to Benin
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [university, setUniversity] = useState('Université d’Abomey-Calavi (UAC) — Bénin');
   const [role, setRole] = useState<'student' | 'landlord'>('student');
-  const [city, setCity] = useState<CityId>('cotonou');
-
-  // Password strength calculation
-  const getPasswordStrength = (pass: string) => {
-    if (!pass) return 0;
-    let score = 0;
-    if (pass.length >= 6) score += 1;
-    if (pass.length >= 10) score += 1;
-    if (/[A-Z]/.test(pass)) score += 1;
-    if (/[0-9]/.test(pass)) score += 1;
-    return score;
-  };
-
-  const passwordStrength = getPasswordStrength(password);
+  const [phone, setPhone] = useState('');
+  const [selectedCity, setSelectedCity] = useState<CityId>('benin');
+  const [university, setUniversity] = useState('UAC (Abomey-Calavi)');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     try {
-      if (mode === 'register') {
-        if (!name.trim()) {
-          setError('Veuillez saisir votre nom complet.');
-          return;
-        }
-        if (!email.trim() || !email.includes('@')) {
-          setError('Veuillez saisir une adresse email valide.');
-          return;
-        }
-        if (!phone.trim()) {
-          setError('Veuillez renseigner votre numéro de téléphone (WhatsApp).');
-          return;
-        }
-        await register(name, email, phone, university, role);
-      } else {
-        if (!email.trim()) {
-          setError('Veuillez renseigner votre adresse email.');
+      if (mode === 'login') {
+        if (!email || !password) {
+          setError('Veuillez remplir tous les champs.');
           return;
         }
         await login(email, password);
+      } else {
+        if (!name || !email || !password || !phone) {
+          setError('Veuillez remplir tous les champs obligatoires.');
+          return;
+        }
+        await register({
+          name,
+          email,
+          role,
+          phone,
+          city: selectedCity,
+          university: role === 'student' ? university : undefined
+        }, password);
       }
       onAuthSuccess();
     } catch (err: any) {
@@ -112,31 +99,49 @@ export const AuthPage: React.FC<AuthPageProps> = ({
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-[#FAF8F5] py-8 sm:py-12 px-4 sm:px-6 flex items-center justify-center">
+    <div className="min-h-[calc(100vh-4rem)] bg-[#FAF9F6] py-8 sm:py-12 px-4 sm:px-6 flex items-center justify-center">
       <div className="max-w-5xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 bg-white rounded-3xl sm:rounded-[32px] border border-stone-200/80 shadow-2xl overflow-hidden">
         
         {/* LEFT PROMOTIONAL / PRESTIGE PANEL (Desktop & Tablet) */}
         <div className="lg:col-span-5 bg-[#0B132B] text-white p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden">
-          {/* Subtle Ambient Background Accent */}
-          <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-amber-600/10 blur-3xl pointer-events-none" />
+          
+          {/* Background image container with subtle slow fade-in + scale animation */}
+          <motion.div
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 z-0 pointer-events-none"
+          >
+            <img
+              src={authStudentsImg}
+              alt="Étudiants Waaloge"
+              className="w-full h-full object-cover"
+              style={{ objectPosition: '65% center' }}
+            />
+            {/* Deep Night Blue Overlay Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0B132B] via-[#0B132B]/92 to-[#0B132B]/75" />
+            <div className="absolute inset-0 bg-[#0B132B]/40" />
+          </motion.div>
 
           {/* Top Brand Header */}
           <div className="space-y-6 relative z-10">
-            <BrandLogo
-              variant="full"
-              theme="dark"
-              size="lg"
-              showCountryBadge={true}
-              onClick={() => onNavigate('home')}
-            />
+            {/* Logo wrapped in a clean, legible container */}
+            <div className="inline-block bg-white/95 backdrop-blur-md p-2.5 rounded-2xl shadow-md border border-white/20">
+              <BrandLogo
+                variant="full"
+                theme="light"
+                size="md"
+                showCountryBadge={true}
+                onClick={() => onNavigate('home')}
+              />
+            </div>
 
             <div className="space-y-3 pt-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold">
-                <ShieldCheck className="w-4 h-4 text-amber-400" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D97706]/15 border border-[#D97706]/30 text-amber-300 text-xs font-semibold backdrop-blur-xs">
+                <ShieldCheck className="w-4 h-4 text-[#D97706]" />
                 <span>Accès Sécurisé Membres</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+              <h2 className="font-editorial text-2xl sm:text-3xl text-white tracking-tight leading-tight">
                 Trouvez votre cocon étudiant au Bénin en toute sérénité.
               </h2>
               <p className="text-sm text-slate-300 font-normal leading-relaxed">
@@ -147,7 +152,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
             {/* Prestige Features List */}
             <div className="space-y-3.5 pt-4">
               <div className="flex items-start gap-3 text-xs text-slate-200">
-                <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded-full bg-[#D97706]/20 text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="w-3 h-3" />
                 </div>
                 <span>
@@ -156,7 +161,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
               </div>
 
               <div className="flex items-start gap-3 text-xs text-slate-200">
-                <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded-full bg-[#D97706]/20 text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="w-3 h-3" />
                 </div>
                 <span>
@@ -165,7 +170,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
               </div>
 
               <div className="flex items-start gap-3 text-xs text-slate-200">
-                <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded-full bg-[#D97706]/20 text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="w-3 h-3" />
                 </div>
                 <span>
@@ -176,9 +181,9 @@ export const AuthPage: React.FC<AuthPageProps> = ({
           </div>
 
           {/* Quick Demo Access Bar */}
-          <div className="mt-8 pt-6 border-t border-slate-800 relative z-10">
+          <div className="mt-8 pt-6 border-t border-slate-800/80 relative z-10">
             <div className="text-[11px] font-bold text-amber-300 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
               <span>Tester immédiatement (Comptes Démo)</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -186,9 +191,9 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                 type="button"
                 onClick={() => handleQuickDemo('student_ucad')}
                 disabled={isLoading}
-                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all group cursor-pointer"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/85 hover:bg-slate-800/90 border border-slate-700/80 text-left transition-all group cursor-pointer"
               >
-                <div className="w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+                <div className="w-7 h-7 rounded-full bg-[#D97706] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
                   R
                 </div>
                 <div className="min-w-0">
@@ -203,7 +208,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                 type="button"
                 onClick={() => handleQuickDemo('landlord')}
                 disabled={isLoading}
-                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all group cursor-pointer"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/85 hover:bg-slate-800/90 border border-slate-700/80 text-left transition-all group cursor-pointer"
               >
                 <div className="w-7 h-7 rounded-full bg-sky-400 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
                   H
