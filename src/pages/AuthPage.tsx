@@ -46,6 +46,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
   const { t } = useLanguage();
 
   const [mode, setMode] = useState<'login' | 'register'>(initialMode);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   // Form State - Defaulted to Benin
