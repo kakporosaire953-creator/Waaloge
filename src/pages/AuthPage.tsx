@@ -106,7 +106,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
         {/* LEFT PROMOTIONAL / PRESTIGE PANEL (Desktop & Tablet) */}
         <div className="lg:col-span-5 bg-[#0B132B] text-white p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden">
           
-          {/* Background image container with subtle slow fade-in + scale animation */}
+          {/* Pure background image with subtle entrance animation */}
           <motion.div
             initial={{ opacity: 0, scale: 1.03 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -117,11 +117,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({
               src={authStudentsImg}
               alt="Étudiants Waaloge"
               className="w-full h-full object-cover"
-              style={{ objectPosition: '65% center' }}
+              style={{ objectPosition: 'center center' }}
             />
-            {/* Deep Night Blue Overlay Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0B132B] via-[#0B132B]/92 to-[#0B132B]/75" />
-            <div className="absolute inset-0 bg-[#0B132B]/40" />
+            {/* Subtle dark gradient scrim to keep text legible */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/50" />
           </motion.div>
 
           {/* Top Brand Header */}
