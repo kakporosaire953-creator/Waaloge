@@ -43,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b border-stone-100 shadow-2xs">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 min-h-[72px] sm:min-h-[86px] md:min-h-[102px] py-1.5 flex items-center justify-between gap-2 sm:gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 min-h-[80px] sm:min-h-[100px] md:min-h-[120px] py-2 flex items-center justify-between gap-2 sm:gap-4">
         
         {/* LEFT: BRAND LOGO */}
         <div className="flex items-center shrink-0">
