@@ -105,6 +105,13 @@ export const HomePage: React.FC<HomePageProps> = ({
     onNavigate('explore');
   };
 
+  const handleQuickNeighborhoodSearch = (neighborhoodName: string) => {
+    onSearch({
+      neighborhood: neighborhoodName,
+    });
+    onNavigate('explore');
+  };
+
   /* Pre-computed step data */
   const stepData = [
     { num: '01', title: t('step_1_title'), desc: t('step_1_desc'), img: STEP_IMGS[0], accent: STEP_ACCENTS[0] },
